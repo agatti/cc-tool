@@ -100,7 +100,7 @@ static bool hex_to_byte(char low_part, char high_part, uint8_t &out_byte)
 		return false;
 
 	char buffer[3] = { low_part, high_part, 0 };
-	out_byte = strtoul(buffer, NULL, 16);
+	out_byte = strtoul(buffer, nullptr, 16);
 	return true;
 }
 

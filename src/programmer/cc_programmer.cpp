@@ -99,7 +99,7 @@ bool CC_Programmer::set_debug_interface_speed(CC_Programmer::InterfaceSpeed spee
 
 	usb_device_.control_write(LIBUSB_REQUEST_TYPE_VENDOR,
 			USB_SET_DEBUG_INTERFACE_SPEED,
-			value, 0, NULL, 0);
+			value, 0, nullptr, 0);
 
 	return true;
 }
@@ -250,7 +250,7 @@ void CC_Programmer::request_device_info()
 void CC_Programmer::unit_status(String &name, bool &supported) const
 {
 	name = unit_info_.name;
-	supported = (driver_ != NULL);
+	supported = (driver_ != nullptr);
 }
 
 //==============================================================================
@@ -265,7 +265,7 @@ void CC_Programmer::enter_debug_mode()
 	const uint8_t USB_PREPARE_DEBUG_MODE = 0xC5;
 
 	usb_device_.control_write(LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_ENDPOINT_OUT,
-			USB_PREPARE_DEBUG_MODE, 0, 0, NULL, 0);
+			USB_PREPARE_DEBUG_MODE, 0, 0, nullptr, 0);
 
 	const uint8_t USB_SET_CHIP_INFO = 0xC8;
 	const size_t command_size =

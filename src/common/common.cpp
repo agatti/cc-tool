@@ -25,7 +25,7 @@ bool hex_to_binary(const String &hex, ByteVector &out, const char delimiter[])
 
 	while (*str)
 	{
-		while (*str && strchr(delimiter, *str) != NULL) str++;
+		while (*str && strchr(delimiter, *str) != nullptr) str++;
 		if (!*str)
 			break;
 
@@ -34,7 +34,7 @@ bool hex_to_binary(const String &hex, ByteVector &out, const char delimiter[])
 			return false;
 		buffer[1] = *str++;
 
-		char *error = NULL;
+		char *error = nullptr;
 		out.push_back(std::strtoul(buffer, &error, 16));
 		if (*error != '\0')
 			return false;
@@ -62,7 +62,7 @@ uint_t get_tick_count()
 {
     struct timeval tv;
 
-    gettimeofday(&tv, NULL);
+    gettimeofday(&tv, nullptr);
     return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 

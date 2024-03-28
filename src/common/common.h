@@ -71,7 +71,7 @@ inline String number_to_string(T number)
 template<typename T>
 inline bool string_to_number(const String &string, T &number)
 {
-	char *bad_character = NULL;
+	char *bad_character = nullptr;
 	number = strtoul(string.c_str(), &bad_character, 10);
 
 	return string.empty() || *bad_character == '\0';

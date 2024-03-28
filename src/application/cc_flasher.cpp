@@ -55,7 +55,7 @@ static bool extract_mac_address(const String &mac, size_t length, ByteVector &da
 		return false;
 
 	for (size_t i = length; i > 0; i--)
-		data.push_back(std::strtoul(match.str(i).c_str(), NULL, 16));
+		data.push_back(std::strtoul(match.str(i).c_str(), nullptr, 16));
 	return true;
 }
 
@@ -304,7 +304,7 @@ bool CC_Flasher::read_options(const po::options_description &desc, const po::var
 
 	if (!option_flash_size_.empty())
 	{
-		char *error = NULL;
+		char *error = nullptr;
 		if (strtoull(option_flash_size_.c_str(), &error, 10) == 0 ||
 				*error != '\0')
 			throw po::error("invalid flash size value " + option_flash_size_);

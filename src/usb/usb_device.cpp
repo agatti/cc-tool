@@ -99,8 +99,8 @@ static void on_timeout_error(const String &context, ssize_t total,
 
 //==============================================================================
 USB_Device::USB_Device() :
-	handle_(NULL),
-	device_(NULL),
+	handle_(nullptr),
+	device_(nullptr),
 	timeout_(0)
 { }
 
@@ -114,7 +114,7 @@ void USB_Device::init_context()
 	if (context_)
 		return;
 
-	libusb_context *context = NULL;
+	libusb_context *context = nullptr;
 	int result = libusb_init(&context);
 	if (result != LIBUSB_SUCCESS)
 		on_error("Failed to init USB context", result);
@@ -125,7 +125,7 @@ void USB_Device::init_context()
 //==============================================================================
 bool USB_Device::opened() const
 {
-	return handle_ != NULL;
+	return handle_ != nullptr;
 }
 
 //==============================================================================
@@ -134,7 +134,7 @@ void USB_Device::close()
 	if (handle_)
 	{
 		libusb_close(handle_);
-		handle_ = NULL;
+		handle_ = nullptr;
 	}
 }
 

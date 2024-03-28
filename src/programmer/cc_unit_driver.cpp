@@ -65,7 +65,7 @@ void CC_UnitDriver::reset(bool debug_mode)
 	uint16_t index = debug_mode ? 1 : 0;
 
 	usb_device_.control_write(LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_ENDPOINT_OUT,
-			USB_REQUEST_RESET, 0, index, NULL, 0);
+			USB_REQUEST_RESET, 0, index, nullptr, 0);
 }
 
 //==============================================================================
