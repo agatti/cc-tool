@@ -70,7 +70,7 @@ static void add_replace_section(
 		if (section.address < cur_section->address)
 		{
 			cur_section = sections.insert(cur_section, section);
-			// normalze
+			// normalize
 			break;
 		}
 		// new section starts in another section
@@ -87,7 +87,7 @@ static void add_replace_section(
 				return;
 			}
 
-			// new section doen't fit current section so resize it and then
+			// new section doesn't fit current section so resize it and then
 			// normalize
 			cur_section->data.resize(section.next_address() - cur_section->address);
 			std::copy(section.data.begin(), section.data.end(),

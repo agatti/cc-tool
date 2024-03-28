@@ -20,7 +20,7 @@ public:
 	virtual void supported_units(Unit_ID_List &units);
 	virtual void find_unit_info(UnitInfo &info);
 	virtual void read_info_page(ByteVector &info_page);
-	virtual bool erase_check_comleted();
+	virtual bool erase_check_completed();
 
 	/// @param offset must be at page boundaries
 	virtual void mac_address_read(size_t index, ByteVector &mac_address);

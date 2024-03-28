@@ -28,7 +28,7 @@
 #include <boost/algorithm/string.hpp>
 
 #define ARRAY_SIZE(a) 				(sizeof(a) / sizeof(a[0]))
-#define ALIGN_UP(value, aligment) 	(((value + (aligment) - 1) / (aligment)) * (aligment))
+#define ALIGN_UP(value, alignment) 	(((value + (alignment) - 1) / (aligment)) * (aligment))
 #define LOBYTE(w) 					((uint8_t)(w))
 #define HIBYTE(w) 					((uint8_t)(((uint16_t)(w) >> 8) & 0xFF))
 
@@ -39,14 +39,14 @@ typedef std::vector<uint8_t> 	ByteVector;
 typedef std::vector<bool> 		BoolVector;
 typedef std::vector<uint_t> 	UintVector;
 
-String 	convinient_storage_size(off_t size);
+String 	convenient_storage_size(off_t size);
 uint_t 	get_tick_count();
 String 	binary_to_hex(const uint8_t data[], size_t size, const char delimiter[] = "");
 String 	binary_to_hex(const ByteVector &data, const char delimiter[] = "");
 void 	vector_append(ByteVector &vector, const uint8_t data[], size_t size);
 String& string_append(String &string, const String &item, const char *delimiter);
 bool 	hex_to_binary(const String &hex, ByteVector &out, const char delimiter[] = "");
-uint_t	align_up(uint_t value, uint_t aligment);
+uint_t	align_up(uint_t value, uint_t alignment);
 
 namespace common_impl
 {

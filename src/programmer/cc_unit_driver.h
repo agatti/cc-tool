@@ -64,7 +64,7 @@ public:
 
 	/// Erase flash completely. Operation is asynchronious,
 	virtual void erase();
-	virtual bool erase_check_comleted() = 0;
+	virtual bool erase_check_completed() = 0;
 
 	/// Erase single page. Page size depends on target
 	/// @param page_offset must be aligned to a page boundary.

@@ -76,7 +76,7 @@ void CC_251x_111x::find_unit_info(UnitInfo &unit_info)
 }
 
 //==============================================================================
-bool CC_251x_111x::erase_check_comleted()
+bool CC_251x_111x::erase_check_completed()
 {
 	uint8_t status = 0;
 

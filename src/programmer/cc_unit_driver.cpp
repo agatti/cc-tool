@@ -190,26 +190,26 @@ void CC_UnitDriver::read_xdata_memory(uint16_t address, size_t count, ByteVector
 
 	uint8_t footer[] 	= { 0xD4, 0x57, 0x90, 0xC2, 0x57, 0x75, 0x92, 0x90, 0x56, 0x74 };
 
-	uint8_t load_dtpr[] = { 0xBE, 0x57, 0x90, 0x00, 0x00 };
-	uint8_t mov_a_dtpr[] = { 0x4E, 0x55, 0xE0 };
-	uint8_t inc_dtpr[] 	= { 0x5E, 0x55, 0xA3 };
+	uint8_t load_dptr[] = { 0xBE, 0x57, 0x90, 0x00, 0x00 };
+	uint8_t mov_a_dptr[] = { 0x4E, 0x55, 0xE0 };
+	uint8_t inc_dptr[] 	= { 0x5E, 0x55, 0xA3 };
 
 	ByteVector command;
 	vector_append(command, header, sizeof(header));
 
-	load_dtpr[sizeof(load_dtpr) - 1] = address;
-	load_dtpr[sizeof(load_dtpr) - 2] = address >> 8;
-	vector_append(command, load_dtpr, sizeof(load_dtpr));
+	load_dptr[sizeof(load_dptr) - 1] = address;
+	load_dptr[sizeof(load_dptr) - 2] = address >> 8;
+	vector_append(command, load_dptr, sizeof(load_dptr));
 
 	for (size_t i = 0; i < count; i++)
 	{
 		if (i == (count - 1) || !((i + 1) % 64))
-			mov_a_dtpr[0] |= 1;
+			mov_a_dptr[0] |= 1;
 		else
-			mov_a_dtpr[0] &= ~1;
+			mov_a_dptr[0] &= ~1;
 
-		vector_append(command, mov_a_dtpr, sizeof(mov_a_dtpr));
-		vector_append(command, inc_dtpr, sizeof(inc_dtpr));
+		vector_append(command, mov_a_dptr, sizeof(mov_a_dptr));
+		vector_append(command, inc_dptr, sizeof(inc_dptr));
 	}
 	vector_append(command, footer, sizeof(footer));
 
@@ -262,21 +262,21 @@ void CC_UnitDriver::write_xdata_memory(uint16_t address, const uint8_t data[], s
 
 	uint8_t footer[] = { 0xD4, 0x57, 0x90, 0xC2, 0x57, 0x75, 0x92, 0x90, 0x56, 0x74 };
 
-	uint8_t load_dtpr[] 	= { 0xBE, 0x57, 0x90, HIBYTE(address), LOBYTE(address) };
+	uint8_t load_dptr[] 	= { 0xBE, 0x57, 0x90, HIBYTE(address), LOBYTE(address) };
 	uint8_t mov_a_data[] 	= { 0x8E, 0x56, 0x74, 0x00 };
-	uint8_t mov_dtpr_a[]	= { 0x5E, 0x55, 0xF0 };
-	uint8_t inc_dtpr[] 		= { 0x5E, 0x55, 0xA3 };
+	uint8_t mov_dptr_a[]	= { 0x5E, 0x55, 0xF0 };
+	uint8_t inc_dptr[] 		= { 0x5E, 0x55, 0xA3 };
 
 	ByteVector command;
 	vector_append(command, header, sizeof(header));
-	vector_append(command, load_dtpr, sizeof(load_dtpr));
+	vector_append(command, load_dptr, sizeof(load_dptr));
 
 	for (size_t i = 0; i < size; i++)
 	{
 		mov_a_data[3] = data[i];
 		vector_append(command, mov_a_data, sizeof(mov_a_data));
-		vector_append(command, mov_dtpr_a, sizeof(mov_dtpr_a));
-		vector_append(command, inc_dtpr, sizeof(inc_dtpr));
+		vector_append(command, mov_dptr_a, sizeof(mov_dptr_a));
+		vector_append(command, inc_dptr, sizeof(inc_dptr));
 	}
 	vector_append(command, footer, sizeof(footer));
 
@@ -430,8 +430,8 @@ static void create_read_proc(size_t count, ByteVector &proc)
 //==============================================================================
 void CC_UnitDriver::flash_read_near(uint16_t address, size_t size, ByteVector &data)
 {
-	const uint8_t load_dtpr[] = { 0xBE, 0x57, 0x90, HIBYTE(address), LOBYTE(address) };
-	usb_device_.bulk_write(endpoint_out_, sizeof(load_dtpr), load_dtpr);
+	const uint8_t load_dptr[] = { 0xBE, 0x57, 0x90, HIBYTE(address), LOBYTE(address) };
+	usb_device_.bulk_write(endpoint_out_, sizeof(load_dptr), load_dptr);
 
 	size_t offset = data.size();
 	data.resize(offset + size, FLASH_EMPTY_BYTE);
@@ -497,7 +497,7 @@ void CC_UnitDriver::flash_read_start()
 	uint8_t byte = 0;
 	usb_device_.control_read(LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_ENDPOINT_IN,
 			USB_PREPARE, 0, 0, &byte, 1);
-	//reset(true); // if write and lock verifing will fail after reset
+	//reset(true); // if write and lock verifying will fail after reset
 
 	uint8_t header[] = {
 		0x40, 0x55, 0x00, 0x72, 0x56, 0xE5, 0xD0, 0x74, 0x56, 0xE5, 0x92, 0xBE,
@@ -591,7 +591,7 @@ void CC_UnitDriver::convert_lock_data_std_set(
 					size);
 
 			if (it == lock_sizes.end())
-				throw std::runtime_error("target unsupport flash size " + arg);
+				throw std::runtime_error("unsupported target flash size " + arg);
 
 			uint8_t index = (uint8_t)(it - lock_sizes.begin());
 
@@ -599,7 +599,7 @@ void CC_UnitDriver::convert_lock_data_std_set(
 			data[0] |= (~index & 0x07) << 1;
 		}
 		else
-			throw std::runtime_error("unknown lock qualifyer: " + item);
+			throw std::runtime_error("unknown lock qualifier: " + item);
 	}
 	lock_data = data;
 }

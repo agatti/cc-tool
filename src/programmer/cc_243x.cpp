@@ -96,7 +96,7 @@ void CC_243x::find_unit_info(UnitInfo &unit_info)
 }
 
 //==============================================================================
-bool CC_243x::erase_check_comleted()
+bool CC_243x::erase_check_completed()
 {
 	uint8_t status = 0;
 

@@ -32,7 +32,7 @@ public:
 	void claim_interface(uint_t interface_number); // throw
 	void release_interface(uint_t interface_number); // throw
 
-	void device_decriptor(libusb_device_descriptor &descriptor); // throw
+	void device_descriptor(libusb_device_descriptor &descriptor); // throw
 	void string_descriptor_utf8(uint8_t index, uint16_t language, String &data); // throw
 	void string_descriptor_ascii(uint8_t index, String &data); // throw
 

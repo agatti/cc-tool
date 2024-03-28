@@ -14,7 +14,7 @@
 #include "common.h"
 #include "data_section.h"
 
-/// Class store and manage a list of DataSections object in (accednig not-overlapped order)
+/// Class store and manage a list of DataSections object in (ascending not-overlapped order)
 class DataSectionStore
 {
 public:

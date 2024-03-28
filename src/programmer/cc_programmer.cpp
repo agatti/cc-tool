@@ -56,9 +56,9 @@ CC_Programmer::CC_Programmer()
 {
 	usb_device_.set_transfer_timeout(DEFAULT_TIMEOUT);
 
-	unit_drviers_.push_back(CC_UnitDriverPtr(new CC_253x_254x(usb_device_, pw_)));
-	unit_drviers_.push_back(CC_UnitDriverPtr(new CC_251x_111x(usb_device_, pw_)));
-	unit_drviers_.push_back(CC_UnitDriverPtr(new CC_243x(usb_device_, pw_)));
+	unit_drivers_.push_back(CC_UnitDriverPtr(new CC_253x_254x(usb_device_, pw_)));
+	unit_drivers_.push_back(CC_UnitDriverPtr(new CC_251x_111x(usb_device_, pw_)));
+	unit_drivers_.push_back(CC_UnitDriverPtr(new CC_243x(usb_device_, pw_)));
 }
 
 //==============================================================================
@@ -75,7 +75,7 @@ USB_DeviceIDVector CC_Programmer::supported_devices() const
 StringVector CC_Programmer::supported_unit_names() const
 {
 	StringVector names;
-	for (const auto &item : unit_drviers_)
+	for (const auto &item : unit_drivers_)
 	{
 		Unit_ID_List units;
 		item->supported_units(units);
@@ -139,7 +139,7 @@ CC_Programmer::OpenResult CC_Programmer::open(uint_t bus, uint_t device)
 		return OR_NOT_FOUND;
 
 	libusb_device_descriptor descriptor;
-	usb_device_.device_decriptor(descriptor);
+	usb_device_.device_descriptor(descriptor);
 
 	for (const auto &item : DeviceTable)
 	{
@@ -184,7 +184,7 @@ bool CC_Programmer::opened() const
 void CC_Programmer::request_device_info()
 {
 	libusb_device_descriptor device_descriptor;
-	usb_device_.device_decriptor(device_descriptor);
+	usb_device_.device_descriptor(device_descriptor);
 
 	char DID[16];
 	sprintf(DID, "%02X%02X",
@@ -219,7 +219,7 @@ void CC_Programmer::request_device_info()
 	programmer_info_.fw_revision = info[4] | info[5] << 8;
 
 	unit_info_.ID = info[0] | info[1] << 8;
-	for (auto &driver : unit_drviers_)
+	for (auto &driver : unit_drivers_)
 	{
 		Unit_ID_List units;
 		driver->supported_units(units);
@@ -338,7 +338,7 @@ bool CC_Programmer::unit_erase()
 	uint_t erase_timer = get_tick_count();
 	do
 	{
-		if (driver_->erase_check_comleted())
+		if (driver_->erase_check_completed())
 			return true;
 		usleep(500 * 1000);
 	}

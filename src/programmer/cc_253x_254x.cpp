@@ -246,7 +246,7 @@ void CC_253x_254x::mac_address_read(size_t index, ByteVector &mac_address)
 }
 
 //==============================================================================
-bool CC_253x_254x::erase_check_comleted()
+bool CC_253x_254x::erase_check_completed()
 {
 	log_info("programmer, check erase is completed");
 
@@ -301,7 +301,7 @@ void CC_253x_254x::convert_lock_data(const StringVector& qualifiers,
 					data[i / 8] &= ~(1 << (i % 8));
 		}
 		else
-			throw std::runtime_error("unknown lock qualifyer: " + s);
+			throw std::runtime_error("unknown lock qualifier: " + s);
 	}
 	lock_data = data;
 }

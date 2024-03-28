@@ -337,7 +337,7 @@ bool CC_Flasher::validate_mac_options()
 	if (task_set_ & (T_WRITE_MAC | T_READ_MAC | T_PRESERVE_MAC) &&
 			!unit_info_.max_flash_size)
 	{
-		std::cout << "  Mac adddress operations are disabled because "
+		std::cout << "  Mac address operations are disabled because "
 				"target flash size is unavailable." << "\n";
 		std::cout << "  See --flash-size option" << "\n";
 
@@ -519,7 +519,7 @@ void CC_Flasher::process_tasks()
 	if (task_set_ & T_RESET)
 	{
 		programmer_.unit_reset();
-		std::cout << "  Target reseted" << "\n";
+		std::cout << "  Target reset" << "\n";
 	}
 
 	if (task_set_ & T_READ_FLASH)
@@ -662,7 +662,7 @@ void CC_Flasher::task_write_flash()
 		return;
 	}
 
-	String size = convinient_storage_size(flash_write_data_.actual_size());
+	String size = convenient_storage_size(flash_write_data_.actual_size());
 	std::cout << "  Writing flash (" << size << ")..." << "\n";
 
 	Timer timer;

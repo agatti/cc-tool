@@ -1,5 +1,5 @@
 /*
- * read_traget.h
+ * read_target.h
  *
  * Created on: Oct 31, 2011
  *     Author: George Stark <george-u@yandex.com>

@@ -12,9 +12,9 @@
 #include "common.h"
 
 //==============================================================================
-uint_t align_up(uint_t value, uint_t aligment)
+uint_t align_up(uint_t value, uint_t alignment)
 {
-	return ((value + aligment - 1) / aligment) * aligment;
+	return ((value + alignment - 1) / alignment) * alignment;
 }
 
 //==============================================================================
@@ -67,7 +67,7 @@ uint_t get_tick_count()
 }
 
 //==============================================================================
-String convinient_storage_size(off_t size)
+String convenient_storage_size(off_t size)
 {
 	const String measure[] = { " B", " KB", " MB", " GB" };
 

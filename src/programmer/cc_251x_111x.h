@@ -19,7 +19,7 @@ public:
 	virtual void supported_units(Unit_ID_List &units);
 	virtual void find_unit_info(UnitInfo &info);
 
-	virtual bool erase_check_comleted();
+	virtual bool erase_check_completed();
 
 	virtual void flash_write(const DataSectionStore &sections);
 	virtual void flash_read_block(size_t offset, size_t size, ByteVector &data);

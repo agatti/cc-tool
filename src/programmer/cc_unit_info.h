@@ -27,7 +27,7 @@ struct UnitInfo
 {
 	enum Flags {
 		SUPPORT_USB = 0x01, 		// remove
-		SUPPORT_MAC_ADDRESS = 0x02, // remove, use mac_address_count to checck
+		SUPPORT_MAC_ADDRESS = 0x02, // remove, use mac_address_count to check
 		SUPPORT_INFO_PAGE = 0x04
 	};
 

@@ -19,7 +19,7 @@ public:
 	virtual void supported_units(Unit_ID_List &units);
 	virtual void find_unit_info(UnitInfo &info);
 
-	virtual bool erase_check_comleted();
+	virtual bool erase_check_completed();
 
 	virtual void mac_address_read(size_t index, ByteVector &mac_address);
 
