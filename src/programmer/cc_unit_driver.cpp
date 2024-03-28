@@ -473,7 +473,7 @@ void CC_UnitDriver::flash_read(size_t offset, size_t size, ByteVector &flash_dat
 		uint8_t flash_bank_1 = (offset + count) / FLASH_BANK_SIZE;
 
 		if (flash_bank_0 != flash_bank_1)
-			size_t count = ((offset + count) % FLASH_BANK_SIZE);
+			count = ((offset + count) % FLASH_BANK_SIZE);
 
 		if (flash_bank != flash_bank_0)
 		{
