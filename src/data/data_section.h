@@ -16,9 +16,9 @@
 
 struct DataSection
 {
-	bool empty() const;
-	size_t size() const;
-	uint_t next_address() const;
+	[[nodiscard]] bool empty() const;
+	[[nodiscard]] size_t size() const;
+	[[nodiscard]] uint_t next_address() const;
 
 	DataSection();
 	DataSection(uint_t address, const ByteVector &data);

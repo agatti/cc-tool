@@ -47,9 +47,9 @@ private:
 //	void flash_read_end();
 
 	/// Return absolute flash offset where secondary mac address is stored
-	uint_t mac_address_offset() const;
+	[[nodiscard]] uint_t mac_address_offset() const;
 	/// Return absolute flash offset where lock data is stored
-	uint_t lock_data_offset() const;
+	[[nodiscard]] uint_t lock_data_offset() const;
 };
 
 #endif // !_CC_253X_2540_H_

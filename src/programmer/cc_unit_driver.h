@@ -110,7 +110,7 @@ public:
 	/// @param debug_mode if true after reset target will be halted
 	void reset(bool debug_mode);
 
-	uint_t lock_data_size() const;
+	[[nodiscard]] uint_t lock_data_size() const;
 
 	bool set_flash_size(uint_t flash_size);
 	void set_programmer_ID(const USB_DeviceID& programmer_ID);

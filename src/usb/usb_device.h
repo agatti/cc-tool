@@ -49,7 +49,7 @@ public:
 
 	bool open_by_vid_pid(uint16_t vendor_id, uint16_t product_id); // throw
 	bool open_by_address(uint8_t bus_number, uint8_t device_address); // throw
-	bool opened() const;
+	[[nodiscard]] bool opened() const;
 	void close();
 
 	USB_Device();

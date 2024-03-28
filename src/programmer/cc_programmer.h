@@ -55,13 +55,13 @@ public:
 
 	OpenResult open();
 	OpenResult open(uint_t bus, uint_t device);
-	bool opened() const;
+	[[nodiscard]] bool opened() const;
 	void close();
 
 	bool programmer_info(CC_ProgrammerInfo &info);
 
-	StringVector supported_unit_names() const;
-	USB_DeviceIDVector supported_devices() const;
+	[[nodiscard]] StringVector supported_unit_names() const;
+	[[nodiscard]] USB_DeviceIDVector supported_devices() const;
 
 	enum InterfaceSpeed { IS_SLOW, IS_FAST };
 	bool set_debug_interface_speed(InterfaceSpeed speed);
@@ -91,7 +91,7 @@ public:
 	void unit_convert_lock_data(const StringVector& qualifiers,
 			ByteVector& lock_data);
 
-	uint_t unit_lock_data_size() const;
+	[[nodiscard]] uint_t unit_lock_data_size() const;
 
 	bool flash_image_embed_mac_address(DataSectionStore &sections,
 			const ByteVector &mac_address);

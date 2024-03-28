@@ -16,7 +16,7 @@
 class Timer : boost::noncopyable
 {
 public:
-	String elapsed_time() const;
+	[[nodiscard]] String elapsed_time() const;
 	Timer();
 
 private:

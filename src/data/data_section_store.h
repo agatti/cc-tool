@@ -19,13 +19,13 @@ class DataSectionStore
 {
 public:
 	/// Return sum of all sections' sizes
-	size_t actual_size() const;
+	[[nodiscard]] size_t actual_size() const;
 
 	/// Return the minor valid address
-	size_t lower_address() const;
+	[[nodiscard]] size_t lower_address() const;
 
 	/// Return the address next to the most one
-	size_t upper_address() const;
+	[[nodiscard]] size_t upper_address() const;
 
 	/// Add section to the store
 	/// @return false if section overlapped and overwrite is false
@@ -41,7 +41,7 @@ public:
 	/// Unite all sections to one continuoys memory block
 	void create_image(uint8_t filler, ByteVector &image) const;
 
-	const DataSectionList &sections() const;
+	[[nodiscard]] const DataSectionList &sections() const;
 
 private:
 	DataSectionList sections_;

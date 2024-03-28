@@ -28,7 +28,7 @@ class ReadTarget
 public:
 	enum SourceType { ST_CONSOLE, ST_FILE };
 
-	SourceType source_type() const;
+	[[nodiscard]] SourceType source_type() const;
 	void set_source(const String &input);
 	void on_read(const ByteVector &data) const;
 

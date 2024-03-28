@@ -46,7 +46,7 @@ struct UnitInfo
 	uint_t mac_address_size;
 	uint_t flash_page_size; // in KB
 
-	size_t actual_flash_size() const;
+	[[nodiscard]] size_t actual_flash_size() const;
 
 	UnitInfo();
 };
