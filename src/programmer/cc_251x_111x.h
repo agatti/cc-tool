@@ -16,18 +16,18 @@
 class CC_251x_111x : public CC_UnitDriver
 {
 public:
-	virtual void supported_units(Unit_ID_List &units);
-	virtual void find_unit_info(UnitInfo &info);
+	void supported_units(Unit_ID_List &units) override;
+	void find_unit_info(UnitInfo &info) override;
 
-	virtual bool erase_check_completed();
+	bool erase_check_completed() override;
 
-	virtual void flash_write(const DataSectionStore &sections);
-	virtual void flash_read_block(size_t offset, size_t size, ByteVector &data);
+	void flash_write(const DataSectionStore &sections) override;
+	void flash_read_block(size_t offset, size_t size, ByteVector &data) override;
 
-	virtual bool config_write(const ByteVector &mac_address, const ByteVector &lock_data);
+	bool config_write(const ByteVector &mac_address, const ByteVector &lock_data) override;
 
-	virtual void convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data);
+	void convert_lock_data(const StringVector& qualifiers,
+			ByteVector& lock_data) override;
 
 	CC_251x_111x(USB_Device &programmer, ProgressWatcher &pw);
 };

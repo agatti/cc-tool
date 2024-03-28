@@ -17,29 +17,29 @@
 class CC_253x_254x : public CC_UnitDriver
 {
 public:
-	virtual void supported_units(Unit_ID_List &units);
-	virtual void find_unit_info(UnitInfo &info);
-	virtual void read_info_page(ByteVector &info_page);
-	virtual bool erase_check_completed();
+	void supported_units(Unit_ID_List &units) override;
+	void find_unit_info(UnitInfo &info) override;
+	void read_info_page(ByteVector &info_page) override;
+	bool erase_check_completed() override;
 
 	/// @param offset must be at page boundaries
-	virtual void mac_address_read(size_t index, ByteVector &mac_address);
-	virtual void flash_write(const DataSectionStore &sections);
-	virtual bool config_write(const ByteVector &mac_address,
-			const ByteVector &lock_data);
+	void mac_address_read(size_t index, ByteVector &mac_address) override;
+	void flash_write(const DataSectionStore &sections) override;
+	bool config_write(const ByteVector &mac_address,
+			const ByteVector &lock_data) override;
 
-	virtual bool flash_image_embed_mac_address(DataSectionStore &sections,
-			const ByteVector &mac_address);
-	virtual bool flash_image_embed_lock_data(DataSectionStore &sections,
-			const ByteVector &lock_data);
+	bool flash_image_embed_mac_address(DataSectionStore &sections,
+			const ByteVector &mac_address) override;
+	bool flash_image_embed_lock_data(DataSectionStore &sections,
+			const ByteVector &lock_data) override;
 
-	virtual void convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data);
+	void convert_lock_data(const StringVector& qualifiers,
+			ByteVector& lock_data) override;
 
 	CC_253x_254x(USB_Device &programmer, ProgressWatcher &pw);
 
 private:
-	virtual void flash_read_block(size_t offset, size_t size, ByteVector &flash_data);
+	void flash_read_block(size_t offset, size_t size, ByteVector &flash_data) override;
 
 //	void flash_read_page(uint16_t address, ByteVector &flash_data);
 	void flash_select_bank(uint_t bank);

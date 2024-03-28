@@ -38,9 +38,9 @@ private:
 	bool validate_lock_options();
 	bool validate_flash_size_options();
 
-	virtual void init_options(po::options_description &);
-	virtual bool read_options(const po::options_description &, const po::variables_map &);
-	virtual void process_tasks();
+	void init_options(po::options_description &) override;
+	bool read_options(const po::options_description &, const po::variables_map &) override;
+	void process_tasks() override;
 
 	String option_lock_data_;
 	String option_info_page_;
