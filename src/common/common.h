@@ -19,11 +19,11 @@
 #include <iostream>
 #include <iomanip>
 #include <stdexcept>
-#include <stdint.h>
-#include <assert.h>
-#include <time.h>
-#include <errno.h>
-#include <ctype.h>
+#include <cstdint>
+#include <cassert>
+#include <ctime>
+#include <cerrno>
+#include <cctype>
 
 #include <boost/algorithm/string.hpp>
 

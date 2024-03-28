@@ -8,7 +8,7 @@
  *
  */
 
-#include <stdio.h>
+#include <cstdio>
 #include "cc_programmer.h"
 #include "cc_251x_111x.h"
 #include "cc_253x_254x.h"

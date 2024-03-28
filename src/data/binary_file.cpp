@@ -8,7 +8,7 @@
  *
  */
 
-#include <stdio.h>
+#include <cstdio>
 #include "binary_file.h"
 #include "file.h"
 
