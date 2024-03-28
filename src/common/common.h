@@ -27,7 +27,6 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
-#include <boost/shared_ptr.hpp>
 
 #define foreach 					BOOST_FOREACH
 #define ARRAY_SIZE(a) 				(sizeof(a) / sizeof(a[0]))

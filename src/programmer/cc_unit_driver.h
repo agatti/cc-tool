@@ -11,6 +11,8 @@
 #ifndef _CC_UNIT_DRIVER_H_
 #define _CC_UNIT_DRIVER_H_
 
+#include <memory>
+
 #include "data/data_section_store.h"
 #include "data/progress_watcher.h"
 #include "usb/usb_device.h"
@@ -156,8 +158,7 @@ private:
 	UnitCoreInfo reg_info_;
 };
 
-typedef boost::shared_ptr<CC_UnitDriver> CC_UnitDriverPtr;
+typedef std::shared_ptr<CC_UnitDriver> CC_UnitDriverPtr;
 typedef std::list<CC_UnitDriverPtr> CC_UnitDriverPtrList;
 
 #endif // !_CC_UNIT_DRIVER_H_
-

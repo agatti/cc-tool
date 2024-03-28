@@ -11,11 +11,12 @@
 #ifndef _USB_DEVICE_H_
 #define _USB_DEVICE_H_
 
+#include <memory>
+
 #include <libusb-1.0/libusb.h>
-#include <boost/shared_ptr.hpp>
 #include "common.h"
 
-typedef boost::shared_ptr<libusb_context> USB_ContextPtr;
+typedef std::shared_ptr<libusb_context> USB_ContextPtr;
 
 class USB_Device : boost::noncopyable
 {
