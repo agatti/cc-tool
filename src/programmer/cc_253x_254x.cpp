@@ -106,14 +106,14 @@ CC_253x_254x::CC_253x_254x(USB_Device &usb_device, ProgressWatcher &pw) :
 //==============================================================================
 void CC_253x_254x::supported_units(Unit_ID_List &units)
 {
-	units.push_back(Unit_ID(0x2530, "CC2530"));
-	units.push_back(Unit_ID(0x2531, "CC2531"));
-	units.push_back(Unit_ID(0x2533, "CC2533"));
-	units.push_back(Unit_ID(0x2540, "CC2540"));
-	units.push_back(Unit_ID(0x2541, "CC2541"));
-	units.push_back(Unit_ID(0x2543, "CC2543"));
-	units.push_back(Unit_ID(0x2544, "CC2544"));
-	units.push_back(Unit_ID(0x2545, "CC2545"));
+	units.emplace_back(0x2530, "CC2530");
+	units.emplace_back(0x2531, "CC2531");
+	units.emplace_back(0x2533, "CC2533");
+	units.emplace_back(0x2540, "CC2540");
+	units.emplace_back(0x2541, "CC2541");
+	units.emplace_back(0x2543, "CC2543");
+	units.emplace_back(0x2544, "CC2544");
+	units.emplace_back(0x2545, "CC2545");
 }
 
 //==============================================================================

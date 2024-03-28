@@ -50,8 +50,8 @@ CC_243x::CC_243x(USB_Device &programmer, ProgressWatcher &pw) :
 //==============================================================================
 void CC_243x::supported_units(Unit_ID_List &units)
 {
-	units.push_back(Unit_ID(0x2430, "CC2430"));
-	units.push_back(Unit_ID(0x2431, "CC2431"));
+	units.emplace_back(0x2430, "CC2430");
+	units.emplace_back(0x2431, "CC2431");
 }
 
 //==============================================================================
