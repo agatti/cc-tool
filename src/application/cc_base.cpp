@@ -5,7 +5,8 @@
  *      Author: st
  */
 
-#include <boost/regex.hpp>
+#include <regex>
+
 #include "common.h"
 #include "version.h"
 #include "log.h"
@@ -16,14 +17,14 @@
 //==============================================================================
 static bool extract_usb_address(const String &str, uint_t &bus, uint_t &device)
 {
-	boost::cmatch what;
-	boost::regex regex("([\\d]{1,3}):([\\d]{1,3})");
-
-	if (!boost::regex_match(str.c_str(), what, regex))
+	std::smatch match;
+	std::regex regex("([\\d]{1,3}):([\\d]{1,3})");
+	if (!std::regex_match(str, match, regex)) {
 		return false;
+	}
 
-	string_to_number(what[1].str(), bus);
-	string_to_number(what[2].str(), device);
+	string_to_number(match.str(1), bus);
+	string_to_number(match.str(2), device);
 	return true;
 }
 

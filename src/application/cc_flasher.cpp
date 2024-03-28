@@ -8,7 +8,8 @@
  *
  */
 
-#include <boost/regex.hpp>
+#include <regex>
+
 #include "common.h"
 #include "version.h"
 #include "log.h"
@@ -47,14 +48,14 @@ static bool extract_mac_address(const String &mac, size_t length, ByteVector &da
 		exp += "([\\da-fA-F]{2}):";
 	exp.erase(exp.end() - 1);
 
-	boost::cmatch what;
-	boost::regex regex(exp);
+	std::smatch match;
+	std::regex regex(exp);
 
-	if (!boost::regex_match(mac.c_str(), what, regex))
+	if (!std::regex_match(mac, match, regex))
 		return false;
 
 	for (size_t i = length; i > 0; i--)
-		data.push_back(std::strtoul(what[i].str().c_str(), NULL, 16));
+		data.push_back(std::strtoul(match.str(i).c_str(), NULL, 16));
 	return true;
 }
 

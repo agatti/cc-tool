@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(libusb REQUIRED IMPORTED_TARGET libusb-1.0)
 
-find_package(Boost COMPONENTS filesystem program_options regex REQUIRED)
+find_package(Boost COMPONENTS filesystem program_options REQUIRED)
 
 file(GLOB_RECURSE SRC_FILES
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
@@ -33,5 +33,4 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     PRIVATE
     PkgConfig::libusb
     Boost::filesystem
-    Boost::program_options
-    Boost::regex)
+    Boost::program_options)

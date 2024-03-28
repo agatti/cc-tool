@@ -8,7 +8,8 @@
  *
  */
 
-#include <boost/regex.hpp>
+#include <regex>
+
 #include "log.h"
 #include "cc_253x_254x.h"
 
@@ -38,8 +39,8 @@ const uint16_t XREG_FMAP 		= 0x709F;
 static void read_range(const String& input, BoolVector& range,
 		uint_t min_value, uint_t max_value)
 {
-	boost::cmatch what;
-	boost::regex exp("(\\d{1,})-(\\d{1,})");
+	std::smatch match;
+	std::regex exp("(\\d{1,})-(\\d{1,})");
 
 	StringVector list;
 	boost::split(list, input, boost::is_any_of(","));
@@ -52,10 +53,10 @@ static void read_range(const String& input, BoolVector& range,
 			r1 = r2 = n;
 		else
 		{
-			if (!boost::regex_match(item.c_str(), what, exp))
+			if (!std::regex_match(item, match, exp))
 				throw std::runtime_error("read_range: incorrect input");
-			string_to_number(what[1].str(), r1);
-			string_to_number(what[2].str(), r2);
+			string_to_number(match.str(1), r1);
+			string_to_number(match.str(2), r2);
 			if (r1 > r2)
 				std::swap(r1, r2);
 		}
