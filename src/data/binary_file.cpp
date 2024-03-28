@@ -36,11 +36,11 @@ void binary_file_load(const String &file_name, ByteVector &vector)
 	{
 		fclose(file);
 		file_io_error("Unable to read file", file_name);
+		return;
 	}
 
 	if (fclose(file))
 		file_io_error("Unable to close file", file_name);
-	//return vector;
 }
 
 //==============================================================================
@@ -55,6 +55,7 @@ void binary_file_save(const String &file_name, const ByteVector &vector)
 	{
 		fclose(file);
 		file_io_error("Unable to write file", file_name);
+		return;
 	}
 
 	if (fclose(file))
