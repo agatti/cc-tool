@@ -317,7 +317,7 @@ void hex_file_save(const String &file_name, const DataSectionStore &section_stor
 		throw FileException("Unable to open file" + file_name);
 
 	uint_t offset = 0;
-	foreach (const DataSection &section, section_store.sections())
+	for (const auto &section : section_store.sections())
 	{
 		uint_t address = section.address;
 		uint_t size    = section.size();

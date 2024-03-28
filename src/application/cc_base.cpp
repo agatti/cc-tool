@@ -93,12 +93,12 @@ void CC_Base::on_help(const po::options_description &desc)
 
 	std::cout << "\n Supported targets:\n   ";
 	StringVector targets = programmer_.supported_unit_names();
-	foreach (const String &item, targets)
+	for (const auto &item : targets)
 		std::cout  << item << " ";
 
 	std::cout << "\n\n Supported programmers:\n";
 	USB_DeviceIDVector devices = programmer_.supported_devices();
-	foreach (const USB_DeviceID &item, devices)
+	for (const auto &item : devices)
 		std::cout  << item << "\n";
 }
 

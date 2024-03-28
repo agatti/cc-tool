@@ -85,7 +85,7 @@ static void load_flash_data(const OptionFileInfo &file_info, DataSectionStore &s
 
 		size_t n = 0;
 		log_info("main, loaded hex file %s", file_info.name.c_str());
-		foreach (const DataSection &item, section_store.sections())
+		for (const auto &item : section_store.sections())
 			log_info(" section %02u, address: %06Xh, size: %06Xh",
 					n++, item.address, item.size());
 	}
@@ -288,7 +288,7 @@ bool CC_Flasher::read_options(const po::options_description &desc, const po::var
 
 		task_set_ |= T_WRITE_FLASH;
 		StringVector list = vm["write"].as<StringVector>();
-		foreach (String &item, list)
+		for (auto &item : list)
 		{
 			OptionFileInfo file_info;
 			option_extract_file_info(item, file_info, true);
@@ -375,7 +375,7 @@ bool CC_Flasher::validate_lock_options()
 	{
 		// check if conversion failed due to odd number of hex digits:
 		bool hex_data = true;
-		foreach(char c, option_lock_data_)
+		for (auto c : option_lock_data_)
 			if (!std::isxdigit(c))
 				hex_data = false;
 		if (hex_data)
@@ -426,7 +426,7 @@ bool CC_Flasher::validate_flash_size_options()
 		if (!found)
 		{
 			String list;
-			foreach (uint_t size, unit_info_.flash_sizes)
+			for (auto size : unit_info_.flash_sizes)
 				string_append(list, number_to_string(size), ", ");
 
 			std::cout << "  Specified flash size is wrong";

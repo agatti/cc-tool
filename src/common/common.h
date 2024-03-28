@@ -26,9 +26,7 @@
 #include <ctype.h>
 
 #include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
 
-#define foreach 					BOOST_FOREACH
 #define ARRAY_SIZE(a) 				(sizeof(a) / sizeof(a[0]))
 #define ALIGN_UP(value, aligment) 	(((value + (aligment) - 1) / (aligment)) * (aligment))
 #define LOBYTE(w) 					((uint8_t)(w))

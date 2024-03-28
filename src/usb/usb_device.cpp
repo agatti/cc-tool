@@ -148,7 +148,7 @@ bool USB_Device::open_by_vid_pid(uint16_t vendor_id, uint16_t product_id)
 	USB_Enumerator enumerator(context_, devices);
 	libusb_device_descriptor descriptor;
 
-	foreach (libusb_device *item, devices)
+	for (auto *item : devices)
 	{
 		if (!libusb_get_device_descriptor(item, &descriptor) &&
 				descriptor.idVendor == vendor_id &&
@@ -176,7 +176,7 @@ bool USB_Device::open_by_address(uint8_t bus_number, uint8_t device_address)
 	libusb_device_vector devices;
 	USB_Enumerator enumerator(context_, devices);
 
-	foreach (libusb_device *item,  devices)
+	for (auto *item : devices)
 	{
 		if (libusb_get_bus_number(item) == bus_number &&
 				libusb_get_device_address(item) == device_address)

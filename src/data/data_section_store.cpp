@@ -31,7 +31,7 @@ static bool check_section_fit(
 		const DataSectionList &sections,
 		const DataSection &section)
 {
-	foreach (const DataSection &item, sections)
+	for (const auto &item : sections)
 	{
 		if (sections_overlapped(item, section))
 			return false;
@@ -168,16 +168,16 @@ bool DataSectionStore::add_sections(const DataSectionStore &store, bool overwrit
 {
 	if (!overwrite)
 	{
-		foreach (const DataSection &item, store.sections())
+		for (const auto &item : store.sections())
 		{
 			if (check_section_fit(sections_, item))
 				return false;
 		}
-		foreach (const DataSection &item, store.sections())
+		for (const auto &item : store.sections())
 			add_insert_section(sections_, item);
 	}
 	else
-		foreach (const DataSection &item, store.sections())
+		for (const auto &item : store.sections())
 			add_replace_section(sections_, item);
 	return true;
 }
@@ -188,7 +188,7 @@ void DataSectionStore::create_image(uint8_t filler, ByteVector &image) const
 	image.resize(upper_address(), 0);
 	std::fill(image.begin(), image.end(), filler);
 
-	foreach (const DataSection &section, sections_)
+	for (const auto &section : sections_)
 		std::copy(section.data.begin(), section.data.end(),	&image[section.address]);
 }
 
@@ -197,7 +197,7 @@ size_t DataSectionStore::actual_size() const
 {
 	size_t size = 0;
 
-	foreach (const DataSection &section, sections_)
+	for (const auto &section : sections_)
 		size += section.data.size();
 	return size;
 }

@@ -65,7 +65,7 @@ CC_Programmer::CC_Programmer()
 USB_DeviceIDVector CC_Programmer::supported_devices() const
 {
 	USB_DeviceIDVector result;
-	foreach (const USB_DeviceID &item, DeviceTable)
+	for (const auto &item : DeviceTable)
 		result.push_back(item);
 
 	return result;
@@ -75,12 +75,12 @@ USB_DeviceIDVector CC_Programmer::supported_devices() const
 StringVector CC_Programmer::supported_unit_names() const
 {
 	StringVector names;
-	foreach (const CC_UnitDriverPtr &item, unit_drviers_)
+	for (const auto &item : unit_drviers_)
 	{
 		Unit_ID_List units;
 		item->supported_units(units);
 
-		foreach (Unit_ID &unit, units)
+		for (auto &unit : units)
 			names.push_back(unit.name);
 	}
 	return names;
@@ -141,7 +141,7 @@ CC_Programmer::OpenResult CC_Programmer::open(uint_t bus, uint_t device)
 	libusb_device_descriptor descriptor;
 	usb_device_.device_decriptor(descriptor);
 
-	foreach (const USB_DeviceID &item, DeviceTable)
+	for (const auto &item : DeviceTable)
 	{
 		if (descriptor.idProduct == item.product_id &&
 				descriptor.idVendor == item.vendor_id)
@@ -157,7 +157,7 @@ CC_Programmer::OpenResult CC_Programmer::open(uint_t bus, uint_t device)
 //==============================================================================
 CC_Programmer::OpenResult CC_Programmer::open()
 {
-	foreach (const USB_DeviceID &item, DeviceTable)
+	for (const auto &item : DeviceTable)
 	{
 		if (usb_device_.open_by_vid_pid(item.vendor_id, item.product_id))
 		{
@@ -196,7 +196,7 @@ void CC_Programmer::request_device_info()
 		usb_device_.string_descriptor_ascii(device_descriptor.iProduct, programmer_info_.name);
 	else
 	{
-		foreach (const USB_DeviceID &item, DeviceTable)
+		for (const auto &item : DeviceTable)
 		{
 			if (device_descriptor.idProduct == item.product_id &&
 					device_descriptor.idVendor == item.vendor_id)
@@ -219,11 +219,11 @@ void CC_Programmer::request_device_info()
 	programmer_info_.fw_revision = info[4] | info[5] << 8;
 
 	unit_info_.ID = info[0] | info[1] << 8;
-	foreach (CC_UnitDriverPtr &driver, unit_drviers_)
+	for (auto &driver : unit_drviers_)
 	{
 		Unit_ID_List units;
 		driver->supported_units(units);
-		foreach (Unit_ID &unit, units)
+		for (auto &unit : units)
 		{
 			if (unit.ID == unit_info_.ID)
 			{

@@ -45,7 +45,7 @@ static void read_range(const String& input, BoolVector& range,
 	StringVector list;
 	boost::split(list, input, boost::is_any_of(","));
 
-	foreach(const String& item, list)
+	for (const auto& item : list)
 	{
 		uint_t n = 0;
 		uint_t r1, r2;
@@ -278,7 +278,7 @@ void CC_253x_254x::convert_lock_data(const StringVector& qualifiers,
 {
 	ByteVector data(LOCK_DATA_SIZE, 0xFF);
 
-	foreach (const String &s, qualifiers)
+	for (const auto &s : qualifiers)
 	{
 		if (s == "debug")
 			data[LOCK_DATA_SIZE - 1] &= ~0x80;

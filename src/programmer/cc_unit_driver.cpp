@@ -306,7 +306,7 @@ bool CC_UnitDriver::flash_verify_by_read(const DataSectionStore &section_store)
 	pw_.read_start(section_store.actual_size());
 
 	flash_read_start();
-	foreach (const DataSection &item, section_store.sections())
+	for (const auto &item : section_store.sections())
 	{
 		flash_read_block(item.address, item.size(), data);
 		if (memcmp(&data[0], &item.data[0], item.size()))
@@ -349,7 +349,7 @@ bool CC_UnitDriver::flash_verify_by_crc(const DataSectionStore &section_store)
 
 	pw_.read_start(section_store.actual_size());
 
-	foreach (const DataSection &section, section_store.sections())
+	for (const auto &section : section_store.sections())
 	{
 		size_t section_offset = section.address;
 		size_t total_size = section.size();
@@ -567,7 +567,7 @@ void CC_UnitDriver::convert_lock_data_std_set(
 {
 	ByteVector data(1, 0x1F);
 
-	foreach (const String &item, qualifiers)
+	for (const auto &item : qualifiers)
 	{
 		if (item == "debug")
 			data[0] &= ~1;
