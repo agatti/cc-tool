@@ -13,13 +13,11 @@
 
 static void on_error(const std::string &context, int error = LIBUSB_ERROR_OTHER);
 
-typedef std::vector<libusb_device *> libusb_device_vector;
-
 //==============================================================================
 class USB_Enumerator
 {
 public:
-	USB_Enumerator(std::shared_ptr<libusb_context> context, libusb_device_vector &devices);
+	USB_Enumerator(std::shared_ptr<libusb_context> context, std::vector<libusb_device *> &devices);
 	~USB_Enumerator();
 
 private:
@@ -27,7 +25,7 @@ private:
 };
 
 //==============================================================================
-USB_Enumerator::USB_Enumerator(std::shared_ptr<libusb_context> context, libusb_device_vector &devices)
+USB_Enumerator::USB_Enumerator(std::shared_ptr<libusb_context> context, std::vector<libusb_device *> &devices)
 {
 	ssize_t count = libusb_get_device_list(context.get(), &list_);
 	if (count < 0)
@@ -144,7 +142,7 @@ bool USB_Device::open_by_vid_pid(uint16_t vendor_id, uint16_t product_id)
 	init_context();
 	close();
 
-	libusb_device_vector devices;
+	std::vector<libusb_device *> devices;
 	USB_Enumerator enumerator(context_, devices);
 	libusb_device_descriptor descriptor;
 
@@ -173,7 +171,7 @@ bool USB_Device::open_by_address(uint8_t bus_number, uint8_t device_address)
 	init_context();
 	close();
 
-	libusb_device_vector devices;
+	std::vector<libusb_device *> devices;
 	USB_Enumerator enumerator(context_, devices);
 
 	for (auto *item : devices)
