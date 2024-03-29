@@ -32,7 +32,6 @@
 #define LOBYTE(w) 					((uint8_t)(w))
 #define HIBYTE(w) 					((uint8_t)(((uint16_t)(w) >> 8) & 0xFF))
 
-typedef std::vector<bool> 		BoolVector;
 typedef std::vector<unsigned int> 	UintVector;
 
 std::string convenient_storage_size(off_t size);

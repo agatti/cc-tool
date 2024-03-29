@@ -36,7 +36,7 @@ const uint16_t XREG_MEMCTR 		= 0x70C7;
 const uint16_t XREG_FMAP 		= 0x709F;
 
 //==============================================================================
-static void read_range(const std::string &input, BoolVector& range,
+static void read_range(const std::string &input, std::vector<bool> &range,
 					   unsigned int min_value, unsigned int max_value)
 {
 	std::smatch match;
@@ -293,7 +293,7 @@ void CC_253x_254x::convert_lock_data(const std::vector<std::string> &qualifiers,
 		else
 		if (s.find("pages:") == 0)
 		{
-			BoolVector pages;
+			std::vector<bool> pages;
 			read_range(s.substr(ARRAY_SIZE("pages:") - 1), pages,
 					0, MAX_PAGE_COUNT - 1);
 			unsigned int count = std::min(pages.size(), MAX_PAGE_COUNT);
