@@ -8,10 +8,14 @@
  *
  */
 
-#include <numeric>
+#include <filesystem>
 #include <fstream>
+#include <numeric>
+
 #include "file.h"
 #include "hex_file.h"
+
+namespace fs = std::filesystem;
 
 void file_io_error(const std::string &message, const std::string &file_name); // throw
 
@@ -63,7 +67,7 @@ struct Record
 };
 
 static void hex_file_error(
-		const std::string &file_name,
+		const fs::path &path,
 		HexDataReader::Error error,
         unsigned int line_number); // throw
 
@@ -235,12 +239,12 @@ HexDataReader::Error HexDataReader::read_complete()
 }
 
 //==============================================================================
-void hex_file_load(const std::string &file_name,
+void hex_file_load(const fs::path &path,
 				   DataSectionStore &section_store, bool ignore_crc_mismatch)
 {
-	std::ifstream in(file_name.c_str());
+	std::ifstream in(path);
 	if (!in)
-		throw std::runtime_error("Unable to open file " + file_name);
+		throw std::runtime_error("Unable to open file " + path.string());
 
 	HexDataReader::Error error = HexDataReader::ERROR_OK;
     unsigned int line_number = 0;
@@ -260,12 +264,12 @@ void hex_file_load(const std::string &file_name,
 
 		error = reader.read_next_record(record_line);
 		if (error != HexDataReader::ERROR_OK)
-			hex_file_error(file_name, error, line_number);
+			hex_file_error(path, error, line_number);
 	}
 
 	error = reader.read_complete();
 	if (error != HexDataReader::ERROR_OK)
-		hex_file_error(file_name, error, line_number);
+		hex_file_error(path, error, line_number);
 
 	//return section_store;
 }
@@ -310,11 +314,11 @@ static void write_segment_record(std::ostream &out, uint16_t address)
 }
 
 //==============================================================================
-void hex_file_save(const std::string &file_name, const DataSectionStore &section_store)
+void hex_file_save(const fs::path &path, const DataSectionStore &section_store)
 {
-	std::ofstream out(file_name.c_str());
+	std::ofstream out(path);
 	if (!out)
-		throw FileException("Unable to open file" + file_name);
+		throw FileException("Unable to open file" + path.string());
 
     unsigned int offset = 0;
 	for (const auto &section : section_store.sections())
@@ -347,13 +351,13 @@ void hex_file_save(const std::string &file_name, const DataSectionStore &section
 
 //==============================================================================
 static void hex_file_error(
-		const std::string &file_name,
+		const fs::path &path,
 		HexDataReader::Error error,
         unsigned int line_number)
 {
 	std::stringstream ss;
 
-	ss << "File '" << file_name << "' load error: ";
+	ss << "File '" << path << "' load error: ";
 
 	switch (error)
 	{
