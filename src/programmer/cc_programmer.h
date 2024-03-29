@@ -38,13 +38,6 @@ struct CC_ProgrammerInfo
 	USB_DeviceID usb_device;
 };
 
-struct CC_Breakpoint
-{
-	size_t number;
-	size_t address;
-};
-
-typedef std::vector<CC_Breakpoint> CC_BreakpointVector;
 typedef std::vector<USB_DeviceID> USB_DeviceIDVector;
 
 ///
@@ -116,7 +109,6 @@ private:
 	std::list<std::shared_ptr<CC_UnitDriver>> unit_drivers_;
 	std::shared_ptr<CC_UnitDriver> driver_;
 	ProgressWatcher pw_;
-	//CC_Breakpoint bps_[CC_BREAKPOINT_COUNT];
 };
 
 #endif // !_CC_PROGRAMMER_H_
