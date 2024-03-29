@@ -24,7 +24,7 @@ Log::~Log()
 }
 
 //==============================================================================
-void Log::set_log_file(const String &file_name)
+void Log::set_log_file(const std::string &file_name)
 {
 	if (file_)
 		fclose(file_);
@@ -32,7 +32,7 @@ void Log::set_log_file(const String &file_name)
 }
 
 //==============================================================================
-void Log::add(LogLevel level, const String &message, va_list ap)
+void Log::add(LogLevel level, const std::string &message, va_list ap)
 {
 	time_t sys_time;
 	tm local_time;
@@ -53,7 +53,7 @@ void Log::add(LogLevel level, const String &message, va_list ap)
 }
 
 //==============================================================================
-void log_info(const String &message, ...)
+void log_info(const std::string &message, ...)
 {
 	va_list ap;
 	va_start(ap, message);

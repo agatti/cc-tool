@@ -32,19 +32,18 @@
 #define LOBYTE(w) 					((uint8_t)(w))
 #define HIBYTE(w) 					((uint8_t)(((uint16_t)(w) >> 8) & 0xFF))
 
-typedef std::string 			String;
-typedef std::vector<String> 	StringVector;
+typedef std::vector<std::string> 	StringVector;
 typedef std::vector<uint8_t> 	ByteVector;
 typedef std::vector<bool> 		BoolVector;
 typedef std::vector<unsigned int> 	UintVector;
 
-String 	convenient_storage_size(off_t size);
+std::string convenient_storage_size(off_t size);
 unsigned int get_tick_count();
-String 	binary_to_hex(const uint8_t data[], size_t size, const char delimiter[] = "");
-String 	binary_to_hex(const ByteVector &data, const char delimiter[] = "");
+std::string binary_to_hex(const uint8_t data[], size_t size, const char delimiter[] = "");
+std::string binary_to_hex(const ByteVector &data, const char delimiter[] = "");
 void 	vector_append(ByteVector &vector, const uint8_t data[], size_t size);
-String& string_append(String &string, const String &item, const char *delimiter);
-bool 	hex_to_binary(const String &hex, ByteVector &out, const char delimiter[] = "");
+std::string & string_append(std::string &string, const std::string &item, const char *delimiter);
+bool 	hex_to_binary(const std::string &hex, ByteVector &out, const char delimiter[] = "");
 unsigned int align_up(unsigned int value, unsigned int alignment);
 
 namespace common_impl
@@ -61,7 +60,7 @@ namespace common_impl
 
 //==============================================================================
 template<typename T>
-inline String number_to_string(T number)
+inline std::string number_to_string(T number)
 {
 	std::stringstream ss;
 	ss << static_cast<typename common_impl::nt<T>::type>(number);
@@ -70,7 +69,7 @@ inline String number_to_string(T number)
 
 //==============================================================================
 template<typename T>
-inline bool string_to_number(const String &string, T &number)
+inline bool string_to_number(const std::string &string, T &number)
 {
 	char *bad_character = nullptr;
 	number = strtoul(string.c_str(), &bad_character, 10);

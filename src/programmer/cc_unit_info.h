@@ -17,10 +17,10 @@
 struct Unit_ID
 {
     unsigned int ID;
-	String name;
+	std::string name;
 
 	Unit_ID() : ID(0) { }
-	Unit_ID(unsigned int ID_, const String &name_) : ID(ID_), name(name_) { }
+	Unit_ID(unsigned int ID_, const std::string &name_) : ID(ID_), name(name_) { }
 };
 
 struct UnitInfo
@@ -32,7 +32,7 @@ struct UnitInfo
 	};
 
     unsigned int ID;                // ID used by programmer
-	String name;			// like 'CCxxxx'
+	std::string name;            // like 'CCxxxx'
 	uint8_t internal_ID; 	// read from chip
 	uint8_t revision;		// read from chip
     unsigned int flags;
@@ -84,7 +84,7 @@ struct UnitCoreInfo
 
 typedef std::list<Unit_ID> Unit_ID_List;
 
-void check_param(bool assert, const String& module, unsigned int line);
+void check_param(bool assert, const std::string &module, unsigned int line);
 #define CHECK_PARAM(x) check_param(x, __FILE__, __LINE__)
 
 #endif // !_CC_UNIT_INFO_H_

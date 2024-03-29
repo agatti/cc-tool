@@ -42,10 +42,10 @@ private:
 	bool read_options(const po::options_description &, const po::variables_map &) override;
 	void process_tasks() override;
 
-	String option_lock_data_;
-	String option_info_page_;
-	String option_verify_type_;
-	String option_flash_size_;
+	std::string option_lock_data_;
+	std::string option_info_page_;
+	std::string option_verify_type_;
+	std::string option_flash_size_;
 	unsigned int task_set_;
 
 	CC_Programmer::VerifyMethod verify_method_;

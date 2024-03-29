@@ -36,7 +36,7 @@ const uint16_t XREG_MEMCTR 		= 0x70C7;
 const uint16_t XREG_FMAP 		= 0x709F;
 
 //==============================================================================
-static void read_range(const String& input, BoolVector& range,
+static void read_range(const std::string &input, BoolVector& range,
 					   unsigned int min_value, unsigned int max_value)
 {
 	std::smatch match;

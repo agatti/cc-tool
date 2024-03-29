@@ -247,7 +247,7 @@ void CC_Programmer::request_device_info()
 }
 
 //==============================================================================
-void CC_Programmer::unit_status(String &name, bool &supported) const
+void CC_Programmer::unit_status(std::string &name, bool &supported) const
 {
 	name = unit_info_.name;
 	supported = (driver_ != nullptr);

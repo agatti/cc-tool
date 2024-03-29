@@ -18,7 +18,7 @@
 class FileException : public std::runtime_error
 {
 public:
-	FileException(const String& arg) : std::runtime_error(arg) { }
+	FileException(const std::string &arg) : std::runtime_error(arg) { }
 };
 
 #endif // !_FILE_H_

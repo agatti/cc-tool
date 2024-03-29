@@ -15,7 +15,7 @@
 #include "cc_base.h"
 
 //==============================================================================
-static bool extract_usb_address(const String &str, unsigned int &bus, unsigned int &device)
+static bool extract_usb_address(const std::string &str, unsigned int &bus, unsigned int &device)
 {
 	std::smatch match;
 	std::regex regex("([\\d]{1,3}):([\\d]{1,3})");
@@ -41,17 +41,17 @@ static std::ostream& operator <<(std::ostream &os, const USB_DeviceID &o)
 }
 
 //==============================================================================
-static void init_log(int argc, char *argv[], String &log_file)
+static void init_log(int argc, char *argv[], std::string &log_file)
 {
 	if (log_file.empty())
-		log_file = String(MODULE_NAME) + ".log";
+		log_file = std::string(MODULE_NAME) + ".log";
 
 	log_get().set_log_file(log_file);
 	log_info("main, %s %u.%u", MODULE_NAME, VERSION_MAJOR, VERSION_MINOR);
 
-	String command_line;
+	std::string command_line;
 	while (argc--)
-		command_line += String(*argv++) + " ";
+		command_line += std::string(*argv++) + " ";
 	log_info("main, command line: %s", command_line.c_str());
 }
 
@@ -71,18 +71,18 @@ void CC_Base::init_options(po::options_description &desc)
 		("help,h", "produce help message");
 
 	desc.add_options()
-		("log", po::value<String>(&option_log_name_)->implicit_value(""),
+		("log", po::value<std::string>(&option_log_name_)->implicit_value(""),
 				"create log of all operations");
 
 	desc.add_options()
-		("device,d", po::value<String>(&option_device_address_),
+		("device,d", po::value<std::string>(&option_device_address_),
 				"set programmer device usb address 'bus:device'");
 
 	desc.add_options()
 		("fast,f", "set fast debug interface speed (by default: slow)");
 
 	desc.add_options()
-		("name,n", po::value<String>(&option_unit_name_),
+		("name,n", po::value<std::string>(&option_unit_name_),
 				"specify target name e.g. CC2530 etc.");
 }
 
@@ -126,7 +126,7 @@ bool CC_Base::read_options(const po::options_description &desc, const po::variab
 //==============================================================================
 bool CC_Base::init_unit()
 {
-	String unit_name;
+	std::string unit_name;
 	bool supported = false;
 	programmer_.unit_status(unit_name, supported);
 

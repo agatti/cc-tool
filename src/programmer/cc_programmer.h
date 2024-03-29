@@ -31,8 +31,8 @@ struct USB_DeviceID
 
 struct CC_ProgrammerInfo
 {
-	String 		 name;
-	String 		 debugger_id; // 4 unique digits
+	std::string name;
+	std::string debugger_id; // 4 unique digits
 	uint16_t 	 fw_version;
 	uint16_t	 fw_revision;
 	USB_DeviceID usb_device;
@@ -68,7 +68,7 @@ public:
 
 	bool unit_set_flash_size(unsigned int flash_size);
 
-	void unit_status(String &name, bool &supported) const;
+	void unit_status(std::string &name, bool &supported) const;
 	bool unit_connect(UnitInfo &info);
 	void unit_close();
 	bool unit_reset();

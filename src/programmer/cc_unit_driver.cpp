@@ -581,7 +581,7 @@ void CC_UnitDriver::convert_lock_data_std_set(
 		if (item.find("flash:") == 0)
 		{
 			unsigned int size = 0;
-			String arg = item.substr(ARRAY_SIZE("flash:") - 1);
+			std::string arg = item.substr(ARRAY_SIZE("flash:") - 1);
 			if (!string_to_number(arg, size))
 				throw std::runtime_error("incorrect flash size value");
 

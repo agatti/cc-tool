@@ -35,7 +35,7 @@ size_t UnitInfo::actual_flash_size() const
 #define CHECK_PARAM(x) check_param(x, __FILE__, __LINE__)
 
 //==============================================================================
-void check_param(bool assert, const String& module, unsigned int line)
+void check_param(bool assert, const std::string &module, unsigned int line)
 {
 	if (assert)
 		return;

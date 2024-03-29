@@ -25,7 +25,7 @@ void Timer::start()
 }
 
 //==============================================================================
-String Timer::elapsed_time() const
+std::string Timer::elapsed_time() const
 {
 	unsigned int elapsed_time = get_tick_count() - start_time_;
 

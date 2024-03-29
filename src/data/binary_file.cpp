@@ -13,15 +13,15 @@
 #include "file.h"
 
 //==============================================================================
-void file_io_error(const String &message, const String &file_name)
+void file_io_error(const std::string &message, const std::string &file_name)
 {
-	String error = message + " "  + file_name + ": " + strerror(errno);
+    std::string error = message + " " + file_name + ": " + strerror(errno);
 
 	throw FileException(error);
 }
 
 //==============================================================================
-void binary_file_load(const String &file_name, ByteVector &vector)
+void binary_file_load(const std::string &file_name, ByteVector &vector)
 {
 	FILE *file = fopen(file_name.c_str(), "r");
 	if (!file)
@@ -44,7 +44,7 @@ void binary_file_load(const String &file_name, ByteVector &vector)
 }
 
 //==============================================================================
-void binary_file_save(const String &file_name, const ByteVector &vector)
+void binary_file_save(const std::string &file_name, const ByteVector &vector)
 {
 	FILE *file = fopen(file_name.c_str(), "w");
 	if (!file)

@@ -33,8 +33,8 @@ public:
 	void release_interface(unsigned int interface_number); // throw
 
 	void device_descriptor(libusb_device_descriptor &descriptor); // throw
-	void string_descriptor_utf8(uint8_t index, uint16_t language, String &data); // throw
-	void string_descriptor_ascii(uint8_t index, String &data); // throw
+	void string_descriptor_utf8(uint8_t index, uint16_t language, std::string &data); // throw
+	void string_descriptor_ascii(uint8_t index, std::string &data); // throw
 
 	void clear_halt(uint8_t endpoint);
 

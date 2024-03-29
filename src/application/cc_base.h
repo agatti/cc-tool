@@ -40,9 +40,9 @@ private:
 	bool init_unit();
 
 	bool option_fast_interface_speed_;
-	String option_unit_name_;
-	String option_device_address_;
-	String option_log_name_;
+    std::string option_unit_name_;
+    std::string option_device_address_;
+    std::string option_log_name_;
 };
 
 #endif // !_CC_BASE_H_

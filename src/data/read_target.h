@@ -15,13 +15,13 @@
 
 struct OptionFileInfo
 {
-	String type;
-	String name;
+	std::string type;
+	std::string name;
 	size_t offset;
 };
 
-void option_extract_file_info(const String &input, OptionFileInfo &file_info,
-		bool support_offset);
+void option_extract_file_info(const std::string &input, OptionFileInfo &file_info,
+							  bool support_offset);
 
 class ReadTarget
 {
@@ -29,14 +29,14 @@ public:
 	enum SourceType { ST_CONSOLE, ST_FILE };
 
 	[[nodiscard]] SourceType source_type() const;
-	void set_source(const String &input);
+	void set_source(const std::string &input);
 	void on_read(const ByteVector &data) const;
 
 	ReadTarget();
 
 private:
-	String file_format_;
-	String file_name_;
+	std::string file_format_;
+	std::string file_name_;
 	SourceType source_type_;
 };
 

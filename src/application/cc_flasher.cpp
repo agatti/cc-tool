@@ -32,7 +32,7 @@ enum Task {
 };
 
 //==============================================================================
-static String mac_address_to_string(const ByteVector &mac)
+static std::string mac_address_to_string(const ByteVector &mac)
 {
 	ByteVector data(mac.size(), 0);
 	std::reverse_copy(mac.begin(), mac.end(), data.begin());
@@ -41,9 +41,9 @@ static String mac_address_to_string(const ByteVector &mac)
 }
 
 //==============================================================================
-static bool extract_mac_address(const String &mac, size_t length, ByteVector &data)
+static bool extract_mac_address(const std::string &mac, size_t length, ByteVector &data)
 {
-	String exp;
+	std::string exp;
 	for (size_t i = 0; i < length; i++)
 		exp += "([\\da-fA-F]{2}):";
 	exp.erase(exp.end() - 1);
@@ -151,7 +151,7 @@ static void on_progress(size_t done_read, size_t total_read)
 static void print_result(bool result)
 {
 	// clear out progress message
-	std::cout << String(18, ' ') << "\r" << std::flush;
+	std::cout << std::string(18, ' ') << "\r" << std::flush;
 
 	if (result)
 		std::cout << "  Completed" << "\n";
@@ -163,7 +163,7 @@ static void print_result(bool result)
 static void print_result(bool result, const Timer& timer)
 {
 	// clear out progress message
-	std::cout << String(18, ' ') << "\r" << std::flush;
+	std::cout << std::string(18, ' ') << "\r" << std::flush;
 
 	if (result)
 		std::cout << "  Completed (" << timer.elapsed_time() << ")" << "\n";
@@ -177,20 +177,20 @@ void CC_Flasher::init_options(po::options_description &desc)
 	CC_Base::init_options(desc);
 
 	desc.add_options()
-		("read-info-page,i", po::value<String>(&option_info_page_)->implicit_value(""),
+		("read-info-page,i", po::value<std::string>(&option_info_page_)->implicit_value(""),
 				"read info pages");
 
 	desc.add_options()
 		("read-mac-address,a", "read mac address(es)");
 
 	desc.add_options()
-		("write-mac-address,b", po::value<String>(), "write (secondary) mac address");
+		("write-mac-address,b", po::value<std::string>(), "write (secondary) mac address");
 
 	desc.add_options()
 		("preserve-mac-address,p", "preserve (secondary) mac address across writing");
 
 	desc.add_options()
-		("read,r", po::value<String>(), "read flash memory");
+		("read,r", po::value<std::string>(), "read flash memory");
 
 	desc.add_options()
 		("erase,e", "erase flash memory");
@@ -200,7 +200,7 @@ void CC_Flasher::init_options(po::options_description &desc)
 				"write flash memory.");
 
 	desc.add_options()
-		("verify,v", po::value<String>()->implicit_value(""),
+		("verify,v", po::value<std::string>()->implicit_value(""),
 				"verify flash after write, method '(r)ead' or '(c)cr' (used by default)");
 
 	desc.add_options()
@@ -210,11 +210,11 @@ void CC_Flasher::init_options(po::options_description &desc)
 		("test,t", "search for programmer and target");
 
 	desc.add_options()
-		("lock,l", po::value<String>(&option_lock_data_),
+		("lock,l", po::value<std::string>(&option_lock_data_),
 				"specify lock data in hex numbers or by string: debug[;pages:xx]");
 
 	desc.add_options()
-		("flash-size,s", po::value<String>(&option_flash_size_),
+		("flash-size,s", po::value<std::string>(&option_flash_size_),
 				"specify target flash size in KB");
 }
 
@@ -234,7 +234,7 @@ bool CC_Flasher::read_options(const po::options_description &desc, const po::var
 	{
 		task_set_ |= T_WRITE_MAC;
 
-		String value = vm["write-mac-address"].as<String>();
+		std::string value = vm["write-mac-address"].as<std::string>();
 
 		if (!extract_mac_address(value, 6, mac_addr_) &&
 				!extract_mac_address(value, 8, mac_addr_))
@@ -254,7 +254,7 @@ bool CC_Flasher::read_options(const po::options_description &desc, const po::var
 	{
 		task_set_ |= T_VERIFY;
 
-		String value = vm["verify"].as<String>();
+		std::string value = vm["verify"].as<std::string>();
 		if (value == "r" || value == "read")
 			verify_method_ = CC_Programmer::VM_BY_READ;
 		else
@@ -275,7 +275,7 @@ bool CC_Flasher::read_options(const po::options_description &desc, const po::var
 	if (vm.count("read"))
 	{
 		task_set_ |= T_READ_FLASH;
-		flash_read_target_.set_source(vm["read"].as<String>());
+		flash_read_target_.set_source(vm["read"].as<std::string>());
 	}
 
 	if (vm.count("write"))
@@ -347,11 +347,11 @@ bool CC_Flasher::validate_mac_options()
 }
 
 //==============================================================================
-StringVector split_string(const String& input)
+StringVector split_string(const std::string &input)
 {
 	StringVector list;
 
-	String s = boost::to_lower_copy(input);
+	std::string s = boost::to_lower_copy(input);
 	boost::split(list, s, boost::is_any_of(";"));
 	StringVector::iterator it = list.begin();
 	while (it != list.end())
@@ -425,7 +425,7 @@ bool CC_Flasher::validate_flash_size_options()
 
 		if (!found)
 		{
-			String list;
+			std::string list;
 			for (auto size : unit_info_.flash_sizes)
 				string_append(list, number_to_string(size), ", ");
 
@@ -443,7 +443,7 @@ bool CC_Flasher::validate_flash_size_options()
 //==============================================================================
 void CC_Flasher::task_write_config()
 {
-	String status;
+	std::string status;
 
 	if (task_set_ & T_LOCK)
 		status += " lock data";
@@ -662,7 +662,7 @@ void CC_Flasher::task_write_flash()
 		return;
 	}
 
-	String size = convenient_storage_size(flash_write_data_.actual_size());
+	std::string size = convenient_storage_size(flash_write_data_.actual_size());
 	std::cout << "  Writing flash (" << size << ")..." << "\n";
 
 	Timer timer;

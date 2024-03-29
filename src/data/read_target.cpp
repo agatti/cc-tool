@@ -18,7 +18,7 @@
 #include "common/common.h"
 
 //==============================================================================
-static String file_extension(const String path)
+static std::string file_extension(const std::string path)
 {
 	return std::filesystem::path(path).extension().string();
 }
@@ -47,7 +47,7 @@ void ReadTarget::on_read(const ByteVector &data) const
 
 
 //==============================================================================
-void ReadTarget::set_source(const String &input)
+void ReadTarget::set_source(const std::string &input)
 {
 	if (input.empty())
 		source_type_ = ST_CONSOLE;
@@ -63,8 +63,8 @@ void ReadTarget::set_source(const String &input)
 }
 
 //==============================================================================
-void option_extract_file_info(const String &input, OptionFileInfo &file_info,
-		bool support_offset)
+void option_extract_file_info(const std::string &input, OptionFileInfo &file_info,
+							  bool support_offset)
 {
 	StringVector strs;
 	boost::split(strs, input, boost::is_any_of(":"));
@@ -92,7 +92,7 @@ void option_extract_file_info(const String &input, OptionFileInfo &file_info,
 			throw std::runtime_error("offset is not allowed here (" + input + ")");
 	}
 
-	String type;
+	std::string type;
 
 	if (file_info.type.empty() || file_info.type == "bin" || file_info.type == "binary")
 		type = "bin";

@@ -14,7 +14,7 @@
 #include "common.h"
 #include "data_section_store.h"
 
-void hex_file_load(const String &file_name, DataSectionStore &section_store, bool ignore_crc_mismatch = false);
-void hex_file_save(const String &file_name, const DataSectionStore &section_store);
+void hex_file_load(const std::string &file_name, DataSectionStore &section_store, bool ignore_crc_mismatch = false);
+void hex_file_save(const std::string &file_name, const DataSectionStore &section_store);
 
 #endif // !_HEX_FILE_H_

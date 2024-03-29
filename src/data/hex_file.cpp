@@ -13,7 +13,7 @@
 #include "file.h"
 #include "hex_file.h"
 
-void file_io_error(const String &message, const String &file_name); // throw
+void file_io_error(const std::string &message, const std::string &file_name); // throw
 
 class HexDataReader
 {
@@ -30,7 +30,7 @@ public:
 		ERROR_SECTION_OVERLAPPING,
 	};
 
-	Error read_next_record(const String &record_line);
+	Error read_next_record(const std::string &record_line);
 	Error read_complete();
 
 	HexDataReader(DataSectionStore &sections, bool ignore_crc);
@@ -63,7 +63,7 @@ struct Record
 };
 
 static void hex_file_error(
-		const String &file_name,
+		const std::string &file_name,
 		HexDataReader::Error error,
         unsigned int line_number); // throw
 
@@ -122,7 +122,7 @@ static unsigned int make_word(uint8_t low_byte, uint8_t high_byte, bool big_endi
 }
 
 //==============================================================================
-static HexDataReader::Error parse_record(const String &line, Record &record, bool ignore_crc)
+static HexDataReader::Error parse_record(const std::string &line, Record &record, bool ignore_crc)
 {
 	if (line[0] != ':')
 		return HexDataReader::ERROR_RECORD_NO_HEADER;
@@ -187,7 +187,7 @@ HexDataReader::HexDataReader(DataSectionStore &store, bool ignore_crc) :
 
 // Do not pass empty lines here!
 //==============================================================================
-HexDataReader::Error HexDataReader::read_next_record(const String &record_line)
+HexDataReader::Error HexDataReader::read_next_record(const std::string &record_line)
 {
 	Record record;
 
@@ -235,8 +235,8 @@ HexDataReader::Error HexDataReader::read_complete()
 }
 
 //==============================================================================
-void hex_file_load(const String &file_name,
-		DataSectionStore &section_store, bool ignore_crc_mismatch)
+void hex_file_load(const std::string &file_name,
+				   DataSectionStore &section_store, bool ignore_crc_mismatch)
 {
 	std::ifstream in(file_name.c_str());
 	if (!in)
@@ -246,7 +246,7 @@ void hex_file_load(const String &file_name,
     unsigned int line_number = 0;
 
 	HexDataReader reader(section_store, ignore_crc_mismatch);
-	String record_line;
+	std::string record_line;
 	while (in)
 	{
 		line_number++;
@@ -310,7 +310,7 @@ static void write_segment_record(std::ostream &out, uint16_t address)
 }
 
 //==============================================================================
-void hex_file_save(const String &file_name, const DataSectionStore &section_store)
+void hex_file_save(const std::string &file_name, const DataSectionStore &section_store)
 {
 	std::ofstream out(file_name.c_str());
 	if (!out)
@@ -347,7 +347,7 @@ void hex_file_save(const String &file_name, const DataSectionStore &section_stor
 
 //==============================================================================
 static void hex_file_error(
-		const String &file_name,
+		const std::string &file_name,
 		HexDataReader::Error error,
         unsigned int line_number)
 {

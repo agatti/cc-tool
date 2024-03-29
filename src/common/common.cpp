@@ -18,7 +18,7 @@ unsigned int align_up(unsigned int value, unsigned int alignment)
 }
 
 //==============================================================================
-bool hex_to_binary(const String &hex, ByteVector &out, const char delimiter[])
+bool hex_to_binary(const std::string &hex, ByteVector &out, const char delimiter[])
 {
 	const char *str = hex.c_str();
 	char buffer[3] = { 0, 0, 0 };
@@ -43,7 +43,7 @@ bool hex_to_binary(const String &hex, ByteVector &out, const char delimiter[])
 }
 
 //==============================================================================
-String binary_to_hex(const uint8_t data[], size_t size, const char delimiter[])
+std::string binary_to_hex(const uint8_t data[], size_t size, const char delimiter[])
 {
 	std::stringstream ss;
 	ss << std::setfill('0') << std::hex << std::uppercase;
@@ -67,9 +67,9 @@ unsigned int get_tick_count()
 }
 
 //==============================================================================
-String convenient_storage_size(off_t size)
+std::string convenient_storage_size(off_t size)
 {
-	const String measure[] = { " B", " KB", " MB", " GB" };
+	const std::string measure[4] = {" B", " KB", " MB", " GB"};
 
 	size_t index = 0;
 	while (size > 1024 && index < (ARRAY_SIZE(measure) - 1))
@@ -81,7 +81,7 @@ String convenient_storage_size(off_t size)
 }
 
 //==============================================================================
-String binary_to_hex(const ByteVector &data, const char delimiter[])
+std::string binary_to_hex(const ByteVector &data, const char delimiter[])
 {	return binary_to_hex(&data[0], data.size(), delimiter); }
 
 //==============================================================================
@@ -89,7 +89,7 @@ void vector_append(ByteVector &vector, const uint8_t data[], size_t size)
 {	vector.insert(vector.end(), data, data + size); }
 
 //==============================================================================
-String &string_append(String &string, const String &item, const char *delimiter)
+std::string & string_append(std::string &string, const std::string &item, const char *delimiter)
 {
 	if (!string.empty())
 		string.append(delimiter);

@@ -11,7 +11,7 @@
 #include "usb_device.h"
 #include "log.h"
 
-static void on_error(const String &context, int error = LIBUSB_ERROR_OTHER);
+static void on_error(const std::string &context, int error = LIBUSB_ERROR_OTHER);
 
 typedef std::vector<libusb_device *> libusb_device_vector;
 
@@ -81,15 +81,15 @@ static const char* libusb_error_string(enum libusb_error errcode)
 }
 
 //==============================================================================
-static void on_error(const String &context, int error)
+static void on_error(const std::string &context, int error)
 {
 	throw std::runtime_error(context + " failed, " +
 			libusb_error_string((libusb_error)error));
 }
 
 //==============================================================================
-static void on_timeout_error(const String &context, ssize_t total,
-		ssize_t transferred)
+static void on_timeout_error(const std::string &context, ssize_t total,
+							 ssize_t transferred)
 {
 	std::stringstream ss;
 	ss << context << " timeout, transferred " << transferred << " from " << total;
@@ -209,7 +209,7 @@ void USB_Device::device_descriptor(libusb_device_descriptor &descriptor)
 }
 
 //==============================================================================
-void USB_Device::string_descriptor_utf8(uint8_t index, uint16_t language, String &data)
+void USB_Device::string_descriptor_utf8(uint8_t index, uint16_t language, std::string &data)
 {
 	check_open();
 
@@ -227,7 +227,7 @@ void USB_Device::string_descriptor_utf8(uint8_t index, uint16_t language, String
 }
 
 //==============================================================================
-void USB_Device::string_descriptor_ascii(uint8_t index, String &data)
+void USB_Device::string_descriptor_ascii(uint8_t index, std::string &data)
 {
 	check_open();
 
