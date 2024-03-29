@@ -114,7 +114,7 @@ private:
 	UnitInfo unit_info_;
 	USB_Device usb_device_;
 	CC_UnitDriverPtrList unit_drivers_;
-	CC_UnitDriverPtr driver_;
+	std::shared_ptr<CC_UnitDriver> driver_;
 	ProgressWatcher pw_;
 	//CC_Breakpoint bps_[CC_BREAKPOINT_COUNT];
 };

@@ -56,9 +56,9 @@ CC_Programmer::CC_Programmer()
 {
 	usb_device_.set_transfer_timeout(DEFAULT_TIMEOUT);
 
-	unit_drivers_.push_back(CC_UnitDriverPtr(new CC_253x_254x(usb_device_, pw_)));
-	unit_drivers_.push_back(CC_UnitDriverPtr(new CC_251x_111x(usb_device_, pw_)));
-	unit_drivers_.push_back(CC_UnitDriverPtr(new CC_243x(usb_device_, pw_)));
+	unit_drivers_.push_back(std::shared_ptr<CC_UnitDriver>(new CC_253x_254x(usb_device_, pw_)));
+	unit_drivers_.push_back(std::shared_ptr<CC_UnitDriver>(new CC_251x_111x(usb_device_, pw_)));
+	unit_drivers_.push_back(std::shared_ptr<CC_UnitDriver>(new CC_243x(usb_device_, pw_)));
 }
 
 //==============================================================================
