@@ -33,7 +33,7 @@ struct USB_DeviceID;
 class CC_UnitDriver : boost::noncopyable
 {
 public:
-	virtual void supported_units(Unit_ID_List &units) = 0;
+	virtual void supported_units(std::list<Unit_ID> &units) = 0;
 	virtual void find_unit_info(UnitInfo &info) = 0;
 
 	virtual void read_info_page(std::vector<uint8_t> &info_page);

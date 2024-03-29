@@ -77,7 +77,7 @@ std::vector<std::string> CC_Programmer::supported_unit_names() const
 	std::vector<std::string> names;
 	for (const auto &item : unit_drivers_)
 	{
-		Unit_ID_List units;
+		std::list<Unit_ID> units;
 		item->supported_units(units);
 
 		for (auto &unit : units)
@@ -221,7 +221,7 @@ void CC_Programmer::request_device_info()
 	unit_info_.ID = info[0] | info[1] << 8;
 	for (auto &driver : unit_drivers_)
 	{
-		Unit_ID_List units;
+		std::list<Unit_ID> units;
 		driver->supported_units(units);
 		for (auto &unit : units)
 		{

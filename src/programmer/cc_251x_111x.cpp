@@ -47,7 +47,7 @@ CC_251x_111x::CC_251x_111x(USB_Device &programmer, ProgressWatcher &pw) :
 }
 
 //==============================================================================
-void CC_251x_111x::supported_units(Unit_ID_List &units)
+void CC_251x_111x::supported_units(std::list<Unit_ID> &units)
 {
 	units.emplace_back(0x2510, "CC2510");
 	units.emplace_back(0x2511, "CC2511");

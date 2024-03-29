@@ -82,8 +82,6 @@ struct UnitCoreInfo
 	UnitCoreInfo();
 };
 
-typedef std::list<Unit_ID> Unit_ID_List;
-
 void check_param(bool assert, const std::string &module, unsigned int line);
 #define CHECK_PARAM(x) check_param(x, __FILE__, __LINE__)
 

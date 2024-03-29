@@ -16,7 +16,7 @@
 class CC_251x_111x : public CC_UnitDriver
 {
 public:
-	void supported_units(Unit_ID_List &units) override;
+	void supported_units(std::list<Unit_ID> &units) override;
 	void find_unit_info(UnitInfo &info) override;
 
 	bool erase_check_completed() override;

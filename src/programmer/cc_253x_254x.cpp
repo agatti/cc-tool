@@ -105,7 +105,7 @@ CC_253x_254x::CC_253x_254x(USB_Device &usb_device, ProgressWatcher &pw) :
 }
 
 //==============================================================================
-void CC_253x_254x::supported_units(Unit_ID_List &units)
+void CC_253x_254x::supported_units(std::list<Unit_ID> &units)
 {
 	units.emplace_back(0x2530, "CC2530");
 	units.emplace_back(0x2531, "CC2531");
