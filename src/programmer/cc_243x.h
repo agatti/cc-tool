@@ -29,8 +29,8 @@ public:
 	bool flash_image_embed_mac_address(DataSectionStore &sections,
 			const ByteVector &mac_address) override;
 
-	void convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data) override;
+	void convert_lock_data(const std::vector<std::string> &qualifiers,
+						   ByteVector& lock_data) override;
 
 	bool config_write(const ByteVector &mac_address, const ByteVector &lock_data) override;
 

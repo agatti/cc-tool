@@ -561,7 +561,7 @@ bool CC_UnitDriver::empty_block(const uint8_t* data, size_t size)
 
 //==============================================================================
 void CC_UnitDriver::convert_lock_data_std_set(
-		const StringVector& qualifiers,
+		const std::vector<std::string> &qualifiers,
 		const ByteVector& lock_sizes,
 		ByteVector& lock_data)
 {

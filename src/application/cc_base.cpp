@@ -92,7 +92,7 @@ void CC_Base::on_help(const po::options_description &desc)
 	print_usage(desc);
 
 	std::cout << "\n Supported targets:\n   ";
-	StringVector targets = programmer_.supported_unit_names();
+	std::vector<std::string> targets = programmer_.supported_unit_names();
 	for (const auto &item : targets)
 		std::cout  << item << " ";
 

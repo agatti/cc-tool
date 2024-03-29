@@ -26,8 +26,8 @@ public:
 
 	bool config_write(const ByteVector &mac_address, const ByteVector &lock_data) override;
 
-	void convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data) override;
+	void convert_lock_data(const std::vector<std::string> &qualifiers,
+						   ByteVector& lock_data) override;
 
 	CC_251x_111x(USB_Device &programmer, ProgressWatcher &pw);
 };

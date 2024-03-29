@@ -33,8 +33,8 @@ public:
 	bool flash_image_embed_lock_data(DataSectionStore &sections,
 			const ByteVector &lock_data) override;
 
-	void convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data) override;
+	void convert_lock_data(const std::vector<std::string> &qualifiers,
+						   ByteVector& lock_data) override;
 
 	CC_253x_254x(USB_Device &programmer, ProgressWatcher &pw);
 

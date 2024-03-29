@@ -103,8 +103,8 @@ bool CC_251x_111x::config_write(const ByteVector &mac_address,
 }
 
 //==============================================================================
-void CC_251x_111x::convert_lock_data(const StringVector& qualifiers,
-		ByteVector& lock_data)
+void CC_251x_111x::convert_lock_data(const std::vector<std::string> &qualifiers,
+                                     ByteVector& lock_data)
 {
 	uint8_t lock_size[] = { 0, 1, 2, 4, 8, 16, 24, 32 };
 	convert_lock_data_std_set(

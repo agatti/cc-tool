@@ -132,8 +132,8 @@ bool CC_243x::flash_image_embed_mac_address(DataSectionStore &sections,
 }
 
 //==============================================================================
-void CC_243x::convert_lock_data(const StringVector& qualifiers,
-		ByteVector& lock_data)
+void CC_243x::convert_lock_data(const std::vector<std::string> &qualifiers,
+								ByteVector& lock_data)
 {
 	uint8_t lock_size[] = { 0, 2, 4, 8, 16, 32, 64, 128 };
 

@@ -66,7 +66,7 @@ void ReadTarget::set_source(const std::string &input)
 void option_extract_file_info(const std::string &input, OptionFileInfo &file_info,
 							  bool support_offset)
 {
-	StringVector strs;
+	std::vector<std::string> strs;
 	boost::split(strs, input, boost::is_any_of(":"));
 
 	if (strs.size() > 3)

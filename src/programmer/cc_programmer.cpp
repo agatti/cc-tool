@@ -72,9 +72,9 @@ USB_DeviceIDVector CC_Programmer::supported_devices() const
 }
 
 //==============================================================================
-StringVector CC_Programmer::supported_unit_names() const
+std::vector<std::string> CC_Programmer::supported_unit_names() const
 {
-	StringVector names;
+	std::vector<std::string> names;
 	for (const auto &item : unit_drivers_)
 	{
 		Unit_ID_List units;
@@ -389,8 +389,8 @@ unsigned int CC_Programmer::unit_lock_data_size() const
 }
 
 //==============================================================================
-void CC_Programmer::unit_convert_lock_data(const StringVector& qualifiers,
-		ByteVector& lock_data)
+void CC_Programmer::unit_convert_lock_data(const std::vector<std::string> &qualifiers,
+										   ByteVector& lock_data)
 {
 	driver_->convert_lock_data(qualifiers, lock_data);
 }

@@ -60,7 +60,7 @@ public:
 
 	bool programmer_info(CC_ProgrammerInfo &info);
 
-	[[nodiscard]] StringVector supported_unit_names() const;
+	[[nodiscard]] std::vector<std::string> supported_unit_names() const;
 	[[nodiscard]] USB_DeviceIDVector supported_devices() const;
 
 	enum InterfaceSpeed { IS_SLOW, IS_FAST };
@@ -88,8 +88,8 @@ public:
 
 	bool unit_config_write(ByteVector &mac_address, ByteVector &lock_data);
 
-	void unit_convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data);
+	void unit_convert_lock_data(const std::vector<std::string> &qualifiers,
+								ByteVector& lock_data);
 
 	[[nodiscard]] unsigned int unit_lock_data_size() const;
 

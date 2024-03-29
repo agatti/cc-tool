@@ -42,7 +42,7 @@ static void read_range(const std::string &input, BoolVector& range,
 	std::smatch match;
 	std::regex exp("(\\d{1,})-(\\d{1,})");
 
-	StringVector list;
+	std::vector<std::string> list;
 	boost::split(list, input, boost::is_any_of(","));
 
 	for (const auto& item : list)
@@ -274,8 +274,8 @@ void CC_253x_254x::flash_read_block(size_t offset, size_t size, ByteVector &data
 }
 
 //==============================================================================
-void CC_253x_254x::convert_lock_data(const StringVector& qualifiers,
-		ByteVector& lock_data)
+void CC_253x_254x::convert_lock_data(const std::vector<std::string> &qualifiers,
+									 ByteVector& lock_data)
 {
 	ByteVector data(LOCK_DATA_SIZE, 0xFF);
 

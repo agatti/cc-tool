@@ -196,7 +196,7 @@ void CC_Flasher::init_options(po::options_description &desc)
 		("erase,e", "erase flash memory");
 
 	desc.add_options()
-		("write,w", po::value<StringVector>(),
+		("write,w", po::value<std::vector<std::string> >(),
 				"write flash memory.");
 
 	desc.add_options()
@@ -287,7 +287,7 @@ bool CC_Flasher::read_options(const po::options_description &desc, const po::var
 		}
 
 		task_set_ |= T_WRITE_FLASH;
-		StringVector list = vm["write"].as<StringVector>();
+		std::vector<std::string> list = vm["write"].as<std::vector<std::string> >();
 		for (auto &item : list)
 		{
 			OptionFileInfo file_info;
@@ -347,13 +347,13 @@ bool CC_Flasher::validate_mac_options()
 }
 
 //==============================================================================
-StringVector split_string(const std::string &input)
+std::vector<std::string> split_string(const std::string &input)
 {
-	StringVector list;
+	std::vector<std::string> list;
 
 	std::string s = boost::to_lower_copy(input);
 	boost::split(list, s, boost::is_any_of(";"));
-	StringVector::iterator it = list.begin();
+	std::vector<std::string>::iterator it = list.begin();
 	while (it != list.end())
 	{
 		boost::trim(*it);

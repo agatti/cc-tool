@@ -59,8 +59,8 @@ public:
 			const ByteVector &lock_data);
 
 	/// Convert list of string qulifiers like 'debug', 'pages:xx' into lock data
-	virtual void convert_lock_data(const StringVector& qualifiers,
-			ByteVector& lock_data) = 0;
+	virtual void convert_lock_data(const std::vector<std::string> &qualifiers,
+								   ByteVector& lock_data) = 0;
 
 	/// Erase flash completely. Operation is asynchronious,
 	virtual void erase();
@@ -141,7 +141,7 @@ protected:
 
 	/// Convert list of string qulifiers 'debug', 'flash:xx', 'boot'
 	void convert_lock_data_std_set(
-			const StringVector& qualifiers,
+			const std::vector<std::string> &qualifiers,
 			const ByteVector& lock_sizes,
 			ByteVector& lock_data);
 
