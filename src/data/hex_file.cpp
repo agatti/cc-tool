@@ -383,6 +383,7 @@ static void hex_file_error(
 
 	case HexDataReader::ERROR_SECTION_OVERLAPPING:
 		ss << "Sections overlapped";
+		break;
 
 	case HexDataReader::ERROR_OK:
 	default:
