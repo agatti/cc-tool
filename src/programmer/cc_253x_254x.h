@@ -19,27 +19,27 @@ class CC_253x_254x : public CC_UnitDriver
 public:
 	void supported_units(Unit_ID_List &units) override;
 	void find_unit_info(UnitInfo &info) override;
-	void read_info_page(ByteVector &info_page) override;
+	void read_info_page(std::vector<uint8_t> &info_page) override;
 	bool erase_check_completed() override;
 
 	/// @param offset must be at page boundaries
-	void mac_address_read(size_t index, ByteVector &mac_address) override;
+	void mac_address_read(size_t index, std::vector<uint8_t> &mac_address) override;
 	void flash_write(const DataSectionStore &sections) override;
-	bool config_write(const ByteVector &mac_address,
-			const ByteVector &lock_data) override;
+	bool config_write(const std::vector<uint8_t> &mac_address,
+			const std::vector<uint8_t> &lock_data) override;
 
 	bool flash_image_embed_mac_address(DataSectionStore &sections,
-			const ByteVector &mac_address) override;
+			const std::vector<uint8_t> &mac_address) override;
 	bool flash_image_embed_lock_data(DataSectionStore &sections,
-			const ByteVector &lock_data) override;
+			const std::vector<uint8_t> &lock_data) override;
 
 	void convert_lock_data(const std::vector<std::string> &qualifiers,
-						   ByteVector& lock_data) override;
+						   std::vector<uint8_t>& lock_data) override;
 
 	CC_253x_254x(USB_Device &programmer, ProgressWatcher &pw);
 
 private:
-	void flash_read_block(size_t offset, size_t size, ByteVector &flash_data) override;
+	void flash_read_block(size_t offset, size_t size, std::vector<uint8_t> &flash_data) override;
 
 //	void flash_read_page(uint16_t address, ByteVector &flash_data);
 	void flash_select_bank(unsigned int bank);

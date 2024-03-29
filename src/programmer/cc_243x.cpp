@@ -67,7 +67,7 @@ void CC_243x::find_unit_info(UnitInfo &unit_info)
 	unit_info.flash_sizes.push_back(64);
 	unit_info.flash_sizes.push_back(128);
 
-	ByteVector sfr;
+	std::vector<uint8_t> sfr;
 
 	read_xdata_memory(0xDF60, 2, sfr);
 	unit_info.revision = sfr[0];
@@ -105,7 +105,7 @@ bool CC_243x::erase_check_completed()
 }
 
 //==============================================================================
-void CC_243x::mac_address_read(size_t index, ByteVector &mac_address)
+void CC_243x::mac_address_read(size_t index, std::vector<uint8_t> &mac_address)
 {	read_xdata_memory(0xDF43, unit_info_.mac_address_size, mac_address); }
 
 //==============================================================================
@@ -113,12 +113,12 @@ void CC_243x::flash_write(const DataSectionStore &sections)
 {	write_flash_slow(sections); }
 
 //==============================================================================
-void CC_243x::flash_read_block(size_t offset, size_t size, ByteVector &data)
+void CC_243x::flash_read_block(size_t offset, size_t size, std::vector<uint8_t> &data)
 {	flash_read(offset, size, data); }
 
 //==============================================================================
 bool CC_243x::flash_image_embed_mac_address(DataSectionStore &sections,
-		const ByteVector &mac_address)
+		const std::vector<uint8_t> &mac_address)
 {
 	if (!unit_info_.flash_size)
 		return false;
@@ -133,18 +133,18 @@ bool CC_243x::flash_image_embed_mac_address(DataSectionStore &sections,
 
 //==============================================================================
 void CC_243x::convert_lock_data(const std::vector<std::string> &qualifiers,
-								ByteVector& lock_data)
+								std::vector<uint8_t>& lock_data)
 {
 	uint8_t lock_size[] = { 0, 2, 4, 8, 16, 32, 64, 128 };
 
 	convert_lock_data_std_set(
 			qualifiers,
-			ByteVector(lock_size, lock_size + ARRAY_SIZE(lock_size)),
+			std::vector<uint8_t>(lock_size, lock_size + ARRAY_SIZE(lock_size)),
 			lock_data);
 }
 
 //==============================================================================
-bool CC_243x::config_write(const ByteVector &mac_address, const ByteVector &lock_data)
+bool CC_243x::config_write(const std::vector<uint8_t> &mac_address, const std::vector<uint8_t> &lock_data)
 {
 	if (!lock_data.empty())
 		write_lock_to_info_page(lock_data[0]);
@@ -162,7 +162,7 @@ bool CC_243x::config_write(const ByteVector &mac_address, const ByteVector &lock
         const unsigned int page_size = unit_info_.flash_page_size * 1024;
         const unsigned int page_offset = unit_info_.flash_size * 1024 - page_size;
 
-		ByteVector block;
+		std::vector<uint8_t> block;
 		flash_read_start();
 		flash_read(page_offset, page_size, block);
 		flash_read_end();
@@ -177,7 +177,7 @@ bool CC_243x::config_write(const ByteVector &mac_address, const ByteVector &lock
 		store.add_section(DataSection(page_offset, block), true);
 		write_flash_slow(store);
 
-		ByteVector check_block;
+		std::vector<uint8_t> check_block;
 		flash_read_start();
 		flash_read(page_offset, page_size, check_block);
 		flash_read_end();

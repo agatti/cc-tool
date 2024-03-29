@@ -62,7 +62,7 @@ void CC_251x_111x::find_unit_info(UnitInfo &unit_info)
 	unit_info.flash_page_size = 1;
 	unit_info.flags = UnitInfo::SUPPORT_INFO_PAGE;
 
-	ByteVector sfr;
+	std::vector<uint8_t> sfr;
 
 	read_xdata_memory(0xDF36, 2, sfr);
 	unit_info.revision = sfr[0];
@@ -85,7 +85,7 @@ bool CC_251x_111x::erase_check_completed()
 }
 
 //==============================================================================
-void CC_251x_111x::flash_read_block(size_t offset, size_t size, ByteVector &data)
+void CC_251x_111x::flash_read_block(size_t offset, size_t size, std::vector<uint8_t> &data)
 {	flash_read_near(offset, size, data); }
 
 //==============================================================================
@@ -93,8 +93,8 @@ void CC_251x_111x::flash_write(const DataSectionStore &sections)
 {	write_flash_slow(sections); }
 
 //==============================================================================
-bool CC_251x_111x::config_write(const ByteVector &mac_address,
-		const ByteVector &lock_data)
+bool CC_251x_111x::config_write(const std::vector<uint8_t> &mac_address,
+		const std::vector<uint8_t> &lock_data)
 {
 	if (!lock_data.empty())
 		write_lock_to_info_page(lock_data[0]);
@@ -104,12 +104,12 @@ bool CC_251x_111x::config_write(const ByteVector &mac_address,
 
 //==============================================================================
 void CC_251x_111x::convert_lock_data(const std::vector<std::string> &qualifiers,
-                                     ByteVector& lock_data)
+									 std::vector<uint8_t>& lock_data)
 {
 	uint8_t lock_size[] = { 0, 1, 2, 4, 8, 16, 24, 32 };
 	convert_lock_data_std_set(
 			qualifiers,
-			ByteVector(lock_size, lock_size + ARRAY_SIZE(lock_size)),
+			std::vector<uint8_t>(lock_size, lock_size + ARRAY_SIZE(lock_size)),
 			lock_data);
 }
 

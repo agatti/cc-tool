@@ -12,7 +12,7 @@
 
 #include "common.h"
 
-void binary_file_load(const std::string &file_name, ByteVector &vector);
-void binary_file_save(const std::string &file_name, const ByteVector &vector);
+void binary_file_load(const std::string &file_name, std::vector<uint8_t> &vector);
+void binary_file_save(const std::string &file_name, const std::vector<uint8_t> &vector);
 
 #endif // !_BINARY_FILE_H_

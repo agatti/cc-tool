@@ -50,8 +50,8 @@ private:
 
 	CC_Programmer::VerifyMethod verify_method_;
 	DataSectionStore flash_write_data_;
-	ByteVector mac_addr_;
-	ByteVector lock_data_;
+	std::vector<uint8_t> mac_addr_;
+	std::vector<uint8_t> lock_data_;
 
 	ReadTarget flash_read_target_;
 	ReadTarget info_page_read_target_;

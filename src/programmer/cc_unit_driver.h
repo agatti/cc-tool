@@ -36,31 +36,31 @@ public:
 	virtual void supported_units(Unit_ID_List &units) = 0;
 	virtual void find_unit_info(UnitInfo &info) = 0;
 
-	virtual void read_info_page(ByteVector &info_page);
+	virtual void read_info_page(std::vector<uint8_t> &info_page);
 
 	/// Read mac address
 	/// @param index 0 - primary address, 1 - secondary address (if any)
-	virtual void mac_address_read(size_t index, ByteVector &mac_address);
+	virtual void mac_address_read(size_t index, std::vector<uint8_t> &mac_address);
 
 	/// Write and verify lock data and/or mac address. If field is empty
 	/// it wont be written.
 	/// @return false if varification after write failed
-	virtual bool config_write(const ByteVector &mac_address,
-			const ByteVector &lock_data) = 0;
+	virtual bool config_write(const std::vector<uint8_t> &mac_address,
+			const std::vector<uint8_t> &lock_data) = 0;
 
 	/// Integrate mac address into flash image
 	/// @return true if target store mac address in flash
 	virtual bool flash_image_embed_mac_address(DataSectionStore &sections,
-			const ByteVector &mac_address);
+			const std::vector<uint8_t> &mac_address);
 
 	/// Integrate lock data into flash image
 	/// @return true if target store lock data in flash
 	virtual bool flash_image_embed_lock_data(DataSectionStore &sections,
-			const ByteVector &lock_data);
+			const std::vector<uint8_t> &lock_data);
 
 	/// Convert list of string qulifiers like 'debug', 'pages:xx' into lock data
 	virtual void convert_lock_data(const std::vector<std::string> &qualifiers,
-								   ByteVector& lock_data) = 0;
+								   std::vector<uint8_t>& lock_data) = 0;
 
 	/// Erase flash completely. Operation is asynchronious,
 	virtual void erase();
@@ -91,7 +91,7 @@ public:
 
 	/// read flash block (offset and size are not limited by any boundares\banks)
 	/// @param offset absolute flash offset
-	virtual void flash_read_block(size_t offset, size_t size, ByteVector &data) = 0;
+	virtual void flash_read_block(size_t offset, size_t size, std::vector<uint8_t> &data) = 0;
 
 	void read_debug_status(uint8_t &status);
 	void read_debug_config(uint8_t &config);
@@ -100,11 +100,11 @@ public:
 	void read_sfr(uint8_t address, uint8_t &value);
 	void write_sfr(uint8_t address, uint8_t value);
 
-	void write_xdata_memory(uint16_t address, const ByteVector &data);
+	void write_xdata_memory(uint16_t address, const std::vector<uint8_t> &data);
 	void write_xdata_memory(uint16_t address, const uint8_t data[], size_t size);
 	void write_xdata_memory(uint16_t address, uint8_t data);
 
-	void read_xdata_memory(uint16_t address, size_t count, ByteVector &out);
+	void read_xdata_memory(uint16_t address, size_t count, std::vector<uint8_t> &out);
 	uint8_t read_xdata_memory(uint16_t address);
 
 	/// @param debug_mode if true after reset target will be halted
@@ -122,10 +122,10 @@ protected:
 
 	/// Read data from the 16-bit address space. Bank number is not changed.
 	/// Result data will be appended to the end of data
-	void flash_read_near(uint16_t address, size_t size, ByteVector &data);
+	void flash_read_near(uint16_t address, size_t size, std::vector<uint8_t> &data);
 
 	/// Read any block size
-	void flash_read(size_t offset, size_t size, ByteVector &data);//todo: rename!!!
+	void flash_read(size_t offset, size_t size, std::vector<uint8_t> &data);//todo: rename!!!
 
 	void set_reg_info(const UnitCoreInfo &);
 	UnitCoreInfo get_reg_info();
@@ -142,8 +142,8 @@ protected:
 	/// Convert list of string qulifiers 'debug', 'flash:xx', 'boot'
 	void convert_lock_data_std_set(
 			const std::vector<std::string> &qualifiers,
-			const ByteVector& lock_sizes,
-			ByteVector& lock_data);
+			const std::vector<uint8_t>& lock_sizes,
+			std::vector<uint8_t>& lock_data);
 
 	USB_Device &usb_device_;
 	ProgressWatcher &pw_;

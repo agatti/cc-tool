@@ -33,7 +33,7 @@ ReadTarget::SourceType ReadTarget::source_type() const
 {	return source_type_; }
 
 //==============================================================================
-void ReadTarget::on_read(const ByteVector &data) const
+void ReadTarget::on_read(const std::vector<uint8_t> &data) const
 {
 	if (file_format_ == "hex")
 	{

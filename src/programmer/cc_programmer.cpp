@@ -272,7 +272,7 @@ void CC_Programmer::enter_debug_mode()
 			programmer_info_.usb_device.protocol == USB_DeviceID::PROTOCOL_TI ?
 			0x30 : 0x20;
 
-	ByteVector command(command_size, ' ');
+	std::vector<uint8_t> command(command_size, ' ');
 	memcpy(&command[0x00], unit_info_.name.c_str(), unit_info_.name.size());
 	memcpy(&command[0x10], "DID:", 4);
 	memcpy(&command[0x15], programmer_info_.debugger_id.c_str(), programmer_info_.debugger_id.size());
@@ -348,21 +348,21 @@ bool CC_Programmer::unit_erase()
 }
 
 //==============================================================================
-void CC_Programmer::unit_read_info_page(ByteVector &info_page)
+void CC_Programmer::unit_read_info_page(std::vector<uint8_t> &info_page)
 {
 	pw_.enable(false);
 	driver_->read_info_page(info_page);
 }
 
 //==============================================================================
-void CC_Programmer::unit_mac_address_read(size_t index, ByteVector &mac_address)
+void CC_Programmer::unit_mac_address_read(size_t index, std::vector<uint8_t> &mac_address)
 {
 	pw_.enable(false);
 	driver_->mac_address_read(index, mac_address);
 }
 
 //==============================================================================
-bool CC_Programmer::unit_config_write(ByteVector &mac_address, ByteVector &lock_data)
+bool CC_Programmer::unit_config_write(std::vector<uint8_t> &mac_address, std::vector<uint8_t> &lock_data)
 {
 	pw_.enable(false);
 	return driver_->config_write(mac_address, lock_data);
@@ -370,14 +370,14 @@ bool CC_Programmer::unit_config_write(ByteVector &mac_address, ByteVector &lock_
 
 //==============================================================================
 bool CC_Programmer::flash_image_embed_mac_address(DataSectionStore &sections,
-		const ByteVector &mac_address)
+		const std::vector<uint8_t> &mac_address)
 {
 	return driver_->flash_image_embed_mac_address(sections, mac_address);
 }
 
 //==============================================================================
 bool CC_Programmer::flash_image_embed_lock_data(DataSectionStore &sections,
-		const ByteVector &lock_data)
+		const std::vector<uint8_t> &lock_data)
 {
 	return driver_->flash_image_embed_lock_data(sections, lock_data);
 }
@@ -390,13 +390,13 @@ unsigned int CC_Programmer::unit_lock_data_size() const
 
 //==============================================================================
 void CC_Programmer::unit_convert_lock_data(const std::vector<std::string> &qualifiers,
-										   ByteVector& lock_data)
+										   std::vector<uint8_t>& lock_data)
 {
 	driver_->convert_lock_data(qualifiers, lock_data);
 }
 
 //==============================================================================
-void CC_Programmer::unit_flash_read(ByteVector &flash_data)
+void CC_Programmer::unit_flash_read(std::vector<uint8_t> &flash_data)
 {
 	pw_.enable(true);
 	pw_.read_start(unit_info_.actual_flash_size());

@@ -39,7 +39,7 @@ public:
 	void remove_sections();
 
 	/// Unite all sections to one continuoys memory block
-	void create_image(uint8_t filler, ByteVector &image) const;
+	void create_image(uint8_t filler, std::vector<uint8_t> &image) const;
 
 	[[nodiscard]] const DataSectionList &sections() const;
 

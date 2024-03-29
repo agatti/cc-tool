@@ -46,7 +46,7 @@ DataSection::DataSection() :
 { }
 
 //==============================================================================
-DataSection::DataSection(unsigned int address_, const ByteVector &data_) :
+DataSection::DataSection(unsigned int address_, const std::vector<uint8_t> &data_) :
 		address(address_),
 		data(data_)
 { }

@@ -32,16 +32,16 @@ enum Task {
 };
 
 //==============================================================================
-static std::string mac_address_to_string(const ByteVector &mac)
+static std::string mac_address_to_string(const std::vector<uint8_t> &mac)
 {
-	ByteVector data(mac.size(), 0);
+	std::vector<uint8_t> data(mac.size(), 0);
 	std::reverse_copy(mac.begin(), mac.end(), data.begin());
 
 	return binary_to_hex(&data[0], data.size(), ":");
 }
 
 //==============================================================================
-static bool extract_mac_address(const std::string &mac, size_t length, ByteVector &data)
+static bool extract_mac_address(const std::string &mac, size_t length, std::vector<uint8_t> &data)
 {
 	std::string exp;
 	for (size_t i = 0; i < length; i++)
@@ -60,7 +60,7 @@ static bool extract_mac_address(const std::string &mac, size_t length, ByteVecto
 }
 
 //==============================================================================
-static void print_hex_dump(const ByteVector &data)
+static void print_hex_dump(const std::vector<uint8_t> &data)
 {
 	size_t total_size = data.size();
 	size_t offset = 0;
@@ -92,7 +92,7 @@ static void load_flash_data(const OptionFileInfo &file_info, DataSectionStore &s
 
 	if (file_info.type == "bin")
 	{
-		ByteVector data;
+		std::vector<uint8_t> data;
 		binary_file_load(file_info.name, data);
 
 		DataSection section(file_info.offset, data);
@@ -573,14 +573,14 @@ void CC_Flasher::task_test()
 //==============================================================================
 void CC_Flasher::task_read_mac_address()
 {
-	ByteVector mac0;
+	std::vector<uint8_t> mac0;
 	programmer_.unit_mac_address_read(0, mac0);
 
 	if (unit_info_.mac_address_count == 1)
 		std::cout << "  MAC address: " << mac_address_to_string(mac0) << "\n";
 	else
 	{
-		ByteVector mac1;
+		std::vector<uint8_t> mac1;
 		programmer_.unit_mac_address_read(1, mac1);
 
 		std::cout << "  MAC addresses, primary: "
@@ -601,7 +601,7 @@ void CC_Flasher::task_read_info_page()
 	std::cout << "  Reading info page..." << "\n";
 
 	Timer timer;
-	ByteVector info_page;
+	std::vector<uint8_t> info_page;
 	programmer_.unit_read_info_page(info_page);
 	print_result(true, timer);
 
@@ -642,7 +642,7 @@ void CC_Flasher::task_read_flash()
 	std::cout << "  Reading flash (" << size << " KB)..." << "\n";
 
 	Timer timer;
-	ByteVector flash_data;
+	std::vector<uint8_t> flash_data;
 	programmer_.unit_flash_read(flash_data);
 	flash_read_target_.on_read(flash_data);
 	print_result(true, timer);

@@ -18,7 +18,7 @@ unsigned int align_up(unsigned int value, unsigned int alignment)
 }
 
 //==============================================================================
-bool hex_to_binary(const std::string &hex, ByteVector &out, const char delimiter[])
+bool hex_to_binary(const std::string &hex, std::vector<uint8_t> &out, const char delimiter[])
 {
 	const char *str = hex.c_str();
 	char buffer[3] = { 0, 0, 0 };
@@ -81,11 +81,11 @@ std::string convenient_storage_size(off_t size)
 }
 
 //==============================================================================
-std::string binary_to_hex(const ByteVector &data, const char delimiter[])
+std::string binary_to_hex(const std::vector<uint8_t> &data, const char delimiter[])
 {	return binary_to_hex(&data[0], data.size(), delimiter); }
 
 //==============================================================================
-void vector_append(ByteVector &vector, const uint8_t data[], size_t size)
+void vector_append(std::vector<uint8_t> &vector, const uint8_t data[], size_t size)
 {	vector.insert(vector.end(), data, data + size); }
 
 //==============================================================================

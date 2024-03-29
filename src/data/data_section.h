@@ -21,11 +21,11 @@ struct DataSection
 	[[nodiscard]] unsigned int next_address() const;
 
 	DataSection();
-	DataSection(unsigned int address, const ByteVector &data);
+	DataSection(unsigned int address, const std::vector<uint8_t> &data);
 	DataSection(unsigned int address, const uint8_t data[], size_t size);
 
     unsigned int address;
-	ByteVector data;
+	std::vector<uint8_t> data;
 };
 
 typedef std::list<DataSection> DataSectionList;

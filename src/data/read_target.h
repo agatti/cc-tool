@@ -30,7 +30,7 @@ public:
 
 	[[nodiscard]] SourceType source_type() const;
 	void set_source(const std::string &input);
-	void on_read(const ByteVector &data) const;
+	void on_read(const std::vector<uint8_t> &data) const;
 
 	ReadTarget();
 

@@ -22,12 +22,12 @@ public:
 	bool erase_check_completed() override;
 
 	void flash_write(const DataSectionStore &sections) override;
-	void flash_read_block(size_t offset, size_t size, ByteVector &data) override;
+	void flash_read_block(size_t offset, size_t size, std::vector<uint8_t> &data) override;
 
-	bool config_write(const ByteVector &mac_address, const ByteVector &lock_data) override;
+	bool config_write(const std::vector<uint8_t> &mac_address, const std::vector<uint8_t> &lock_data) override;
 
 	void convert_lock_data(const std::vector<std::string> &qualifiers,
-						   ByteVector& lock_data) override;
+						   std::vector<uint8_t>& lock_data) override;
 
 	CC_251x_111x(USB_Device &programmer, ProgressWatcher &pw);
 };

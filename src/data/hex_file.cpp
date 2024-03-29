@@ -59,7 +59,7 @@ struct Record
 
 	Type type;
     unsigned int address;
-	ByteVector data;
+	std::vector<uint8_t> data;
 };
 
 static void hex_file_error(

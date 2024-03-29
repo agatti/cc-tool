@@ -127,7 +127,7 @@ void CC_253x_254x::find_unit_info(UnitInfo &unit_info)
 
 	unit_info.flags = UnitInfo::SUPPORT_INFO_PAGE;
 
-	ByteVector sfr;
+	std::vector<uint8_t> sfr;
 	read_xdata_memory(0x6276, 2, sfr);
 
 	if (sfr[0] & 0x08)
@@ -203,13 +203,13 @@ void CC_253x_254x::find_unit_info(UnitInfo &unit_info)
 }
 
 //==============================================================================
-void CC_253x_254x::read_info_page(ByteVector &info_page)
+void CC_253x_254x::read_info_page(std::vector<uint8_t> &info_page)
 {
 	log_info("programmer, read info page");
 
 	size_t address = INFO_PAGE_OFFSET;
 	size_t total_size = INFO_PAGE_SIZE;
-	ByteVector data;
+	std::vector<uint8_t> data;
 
 	while (total_size)
 	{
@@ -222,7 +222,7 @@ void CC_253x_254x::read_info_page(ByteVector &info_page)
 }
 
 //==============================================================================
-void CC_253x_254x::mac_address_read(size_t index, ByteVector &mac_address)
+void CC_253x_254x::mac_address_read(size_t index, std::vector<uint8_t> &mac_address)
 {
 	CHECK_PARAM(unit_info_.flags & UnitInfo::SUPPORT_MAC_ADDRESS);
 
@@ -268,16 +268,16 @@ void CC_253x_254x::flash_select_bank(unsigned int bank)
 }
 
 //==============================================================================
-void CC_253x_254x::flash_read_block(size_t offset, size_t size, ByteVector &data)
+void CC_253x_254x::flash_read_block(size_t offset, size_t size, std::vector<uint8_t> &data)
 {
 	flash_read(offset, size, data);
 }
 
 //==============================================================================
 void CC_253x_254x::convert_lock_data(const std::vector<std::string> &qualifiers,
-									 ByteVector& lock_data)
+									 std::vector<uint8_t> &lock_data)
 {
-	ByteVector data(LOCK_DATA_SIZE, 0xFF);
+	std::vector<uint8_t> data(LOCK_DATA_SIZE, 0xFF);
 
 	for (const auto &s : qualifiers)
 	{
@@ -309,7 +309,7 @@ void CC_253x_254x::convert_lock_data(const std::vector<std::string> &qualifiers,
 
 //==============================================================================
 bool CC_253x_254x::flash_image_embed_mac_address(DataSectionStore &sections,
-		const ByteVector &mac_address)
+												 const std::vector<uint8_t> &mac_address)
 {
 	if (!(unit_info_.flags & UnitInfo::SUPPORT_MAC_ADDRESS))
 		return false;
@@ -321,7 +321,7 @@ bool CC_253x_254x::flash_image_embed_mac_address(DataSectionStore &sections,
 
 //==============================================================================
 bool CC_253x_254x::flash_image_embed_lock_data(DataSectionStore &sections,
-		const ByteVector &lock_data)
+											   const std::vector<uint8_t> &lock_data)
 {
 	DataSection section(lock_data_offset(), lock_data);
 	sections.add_section(section, true);
@@ -342,8 +342,8 @@ unsigned int CC_253x_254x::lock_data_offset() const
 }
 
 //==============================================================================
-bool CC_253x_254x::config_write(const ByteVector &mac_address,
-		const ByteVector &lock_data)
+bool CC_253x_254x::config_write(const std::vector<uint8_t> &mac_address,
+								const std::vector<uint8_t> &lock_data)
 {
 	if (mac_address.empty() && lock_data.empty())
 		return true;
@@ -351,7 +351,7 @@ bool CC_253x_254x::config_write(const ByteVector &mac_address,
 	const unsigned int page_size = unit_info_.flash_page_size * 1024;
 	const unsigned int page_offset = unit_info_.flash_size * 1024 - page_size;
 
-	ByteVector block;
+	std::vector<uint8_t> block;
 	flash_read(page_offset, page_size, block);
 
 	if (!empty_block(&block[0], block.size()))
@@ -378,7 +378,7 @@ bool CC_253x_254x::config_write(const ByteVector &mac_address,
 	store.add_section(DataSection(page_offset, block), true);
 	write_flash_slow(store);
 
-	ByteVector check_block;
+	std::vector<uint8_t> check_block;
 	flash_read(page_offset, page_size, check_block);
 
 	return memcmp(&check_block[0], &block[0], block.size()) == 0;
@@ -442,7 +442,7 @@ void CC_253x_254x::flash_write(const DataSectionStore &sections)
 		0x42 // increment source
 	};
 
-	ByteVector xsfr;
+	std::vector<uint8_t> xsfr;
 
 	// Load dma descriptors
 	write_xdata_memory(ADDR_DMA_DESC, dma_desc, sizeof(dma_desc));
@@ -454,7 +454,7 @@ void CC_253x_254x::flash_write(const DataSectionStore &sections)
 	write_xdata_memory(XREG_FADDRL, 0);
 	write_xdata_memory(XREG_FADDRH, 0);
 
-	ByteVector data;
+	std::vector<uint8_t> data;
 	sections.create_image(FLASH_EMPTY_BYTE, data);
 	data.resize(align_up(sections.upper_address(), PROG_BLOCK_SIZE), FLASH_EMPTY_BYTE);
 
@@ -476,7 +476,7 @@ void CC_253x_254x::flash_write(const DataSectionStore &sections)
 		// transfer next buffer (first buffer when i == 0)
 		write_xdata_memory(XREG_DMAARM, dbg_arm);
 
-		ByteVector command;
+		std::vector<uint8_t> command;
 		command.push_back(0xEE);
 		command.push_back(0x84);
 		command.push_back(0x00);

@@ -21,7 +21,7 @@ void file_io_error(const std::string &message, const std::string &file_name)
 }
 
 //==============================================================================
-void binary_file_load(const std::string &file_name, ByteVector &vector)
+void binary_file_load(const std::string &file_name, std::vector<uint8_t> &vector)
 {
 	FILE *file = fopen(file_name.c_str(), "r");
 	if (!file)
@@ -44,7 +44,7 @@ void binary_file_load(const std::string &file_name, ByteVector &vector)
 }
 
 //==============================================================================
-void binary_file_save(const std::string &file_name, const ByteVector &vector)
+void binary_file_save(const std::string &file_name, const std::vector<uint8_t> &vector)
 {
 	FILE *file = fopen(file_name.c_str(), "w");
 	if (!file)

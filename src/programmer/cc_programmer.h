@@ -76,28 +76,28 @@ public:
 	bool unit_locked();
 	bool unit_erase();
 
-	void unit_read_info_page(ByteVector &info_page);
+	void unit_read_info_page(std::vector<uint8_t> &info_page);
 
-	void unit_mac_address_read(size_t index, ByteVector &mac_address);
+	void unit_mac_address_read(size_t index, std::vector<uint8_t> &mac_address);
 
-	void unit_flash_read(ByteVector &flash_data);
+	void unit_flash_read(std::vector<uint8_t> &flash_data);
 	void unit_flash_write(const DataSectionStore &sections);
 
 	enum VerifyMethod { VM_BY_CRC, VM_BY_READ };
 	bool unit_flash_verify(const DataSectionStore &sections, VerifyMethod method);
 
-	bool unit_config_write(ByteVector &mac_address, ByteVector &lock_data);
+	bool unit_config_write(std::vector<uint8_t> &mac_address, std::vector<uint8_t> &lock_data);
 
 	void unit_convert_lock_data(const std::vector<std::string> &qualifiers,
-								ByteVector& lock_data);
+								std::vector<uint8_t>& lock_data);
 
 	[[nodiscard]] unsigned int unit_lock_data_size() const;
 
 	bool flash_image_embed_mac_address(DataSectionStore &sections,
-			const ByteVector &mac_address);
+			const std::vector<uint8_t> &mac_address);
 
 	bool flash_image_embed_lock_data(DataSectionStore &sections,
-			const ByteVector &lock_data);
+			const std::vector<uint8_t> &lock_data);
 
 
 	void do_on_flash_read_progress(const ProgressWatcher::OnProgress::slot_type&);

@@ -143,7 +143,7 @@ void CC_UnitDriver::write_sfr(uint8_t address, uint8_t value)
 	uint8_t mov_a_direct[] 	= { 0xBE, 0x57, 0x75, address, value };
 	uint8_t footer[] 		= { 0x90, 0x56, 0x74 };
 
-	ByteVector command;
+	std::vector<uint8_t> command;
 	vector_append(command, header, sizeof(header));
 	vector_append(command, mov_a_direct, sizeof(mov_a_direct));
 	vector_append(command, footer, sizeof(footer));
@@ -160,7 +160,7 @@ void CC_UnitDriver::read_sfr(uint8_t address, uint8_t &value)
 	uint8_t mov_a_direct[] 	= { 0x7F, 0x56, 0xE5, address };
 	uint8_t footer[] 		= { 0x90, 0x56, 0x74 };
 
-	ByteVector command;
+	std::vector<uint8_t> command;
 	vector_append(command, header, sizeof(header));
 	vector_append(command, mov_a_direct, sizeof(mov_a_direct));
 	vector_append(command, footer, sizeof(footer));
@@ -174,13 +174,13 @@ void CC_UnitDriver::read_sfr(uint8_t address, uint8_t &value)
 //==============================================================================
 uint8_t CC_UnitDriver::read_xdata_memory(uint16_t address)
 {
-	ByteVector data;
+	std::vector<uint8_t> data;
 	read_xdata_memory(address, 1, data);
 	return data[0];
 }
 
 //==============================================================================
-void CC_UnitDriver::read_xdata_memory(uint16_t address, size_t count, ByteVector &data)
+void CC_UnitDriver::read_xdata_memory(uint16_t address, size_t count, std::vector<uint8_t> &data)
 {
 	log_info("programmer, read xdata memory at %04Xh, count: %u", address, count);
 
@@ -194,7 +194,7 @@ void CC_UnitDriver::read_xdata_memory(uint16_t address, size_t count, ByteVector
 	uint8_t mov_a_dptr[] = { 0x4E, 0x55, 0xE0 };
 	uint8_t inc_dptr[] 	= { 0x5E, 0x55, 0xA3 };
 
-	ByteVector command;
+	std::vector<uint8_t> command;
 	vector_append(command, header, sizeof(header));
 
 	load_dptr[sizeof(load_dptr) - 1] = address;
@@ -223,24 +223,24 @@ void CC_UnitDriver::read_xdata_memory(uint16_t address, size_t count, ByteVector
 
 //==============================================================================
 bool CC_UnitDriver::flash_image_embed_mac_address(DataSectionStore &sections,
-		const ByteVector &mac_address)
+		const std::vector<uint8_t> &mac_address)
 {
 	return false;
 }
 
 //==============================================================================
 bool CC_UnitDriver::flash_image_embed_lock_data(DataSectionStore &sections,
-		const ByteVector &lock_data)
+		const std::vector<uint8_t> &lock_data)
 {
 	return false;
 }
 
 //==============================================================================
-void CC_UnitDriver::read_info_page(ByteVector &info_page)
+void CC_UnitDriver::read_info_page(std::vector<uint8_t> &info_page)
 { }
 
 //==============================================================================
-void CC_UnitDriver::mac_address_read(size_t index, ByteVector &mac_address)
+void CC_UnitDriver::mac_address_read(size_t index, std::vector<uint8_t> &mac_address)
 { }
 
 //==============================================================================
@@ -248,7 +248,7 @@ void CC_UnitDriver::write_xdata_memory(uint16_t address, uint8_t data)
 {	write_xdata_memory(address, &data, 1); }
 
 //==============================================================================
-void CC_UnitDriver::write_xdata_memory(uint16_t address, const ByteVector &data)
+void CC_UnitDriver::write_xdata_memory(uint16_t address, const std::vector<uint8_t> &data)
 {	write_xdata_memory(address, &data[0], data.size()); }
 
 //==============================================================================
@@ -267,7 +267,7 @@ void CC_UnitDriver::write_xdata_memory(uint16_t address, const uint8_t data[], s
 	uint8_t mov_dptr_a[]	= { 0x5E, 0x55, 0xF0 };
 	uint8_t inc_dptr[] 		= { 0x5E, 0x55, 0xA3 };
 
-	ByteVector command;
+	std::vector<uint8_t> command;
 	vector_append(command, header, sizeof(header));
 	vector_append(command, load_dptr, sizeof(load_dptr));
 
@@ -300,7 +300,7 @@ void CC_UnitDriver::select_info_page_flash(bool select_info_pages)
 //==============================================================================
 bool CC_UnitDriver::flash_verify_by_read(const DataSectionStore &section_store)
 {
-	ByteVector data;
+	std::vector<uint8_t> data;
 	bool result = true;
 
 	pw_.read_start(section_store.actual_size());
@@ -403,13 +403,13 @@ uint16_t CC_UnitDriver::calc_block_crc()
 
 	while (!(read_xdata_memory(reg_info_.dma_irq) & 0x01));
 
-	ByteVector xsfr;
+	std::vector<uint8_t> xsfr;
 	read_xdata_memory(reg_info_.rndl, 2, xsfr);
 	return xsfr[0] | (xsfr[1] << 8);
 }
 
 //==============================================================================
-static void create_read_proc(size_t count, ByteVector &proc)
+static void create_read_proc(size_t count, std::vector<uint8_t> &proc)
 {
 	uint8_t clr_a[]			= { 0x5E, 0x55, 0xE4 };
 	uint8_t mov_c_a_dptr_a[]= { 0x4E, 0x55, 0x93 };
@@ -428,7 +428,7 @@ static void create_read_proc(size_t count, ByteVector &proc)
 }
 
 //==============================================================================
-void CC_UnitDriver::flash_read_near(uint16_t address, size_t size, ByteVector &data)
+void CC_UnitDriver::flash_read_near(uint16_t address, size_t size, std::vector<uint8_t> &data)
 {
 	const uint8_t load_dptr[] = { 0xBE, 0x57, 0x90, HIBYTE(address), LOBYTE(address) };
 	usb_device_.bulk_write(endpoint_out_, sizeof(load_dptr), load_dptr);
@@ -436,7 +436,7 @@ void CC_UnitDriver::flash_read_near(uint16_t address, size_t size, ByteVector &d
 	size_t offset = data.size();
 	data.resize(offset + size, FLASH_EMPTY_BYTE);
 
-	ByteVector command;
+	std::vector<uint8_t> command;
 	for (size_t i = 0; i < size / FLASH_READ_CHUNK_SIZE; i++)
 	{
 		if (command.empty())
@@ -461,7 +461,7 @@ void CC_UnitDriver::flash_read_near(uint16_t address, size_t size, ByteVector &d
 }
 
 //==============================================================================
-void CC_UnitDriver::flash_read(size_t offset, size_t size, ByteVector &flash_data)
+void CC_UnitDriver::flash_read(size_t offset, size_t size, std::vector<uint8_t> &flash_data)
 {
 	uint8_t flash_bank = 0xFF;
 
@@ -523,7 +523,7 @@ void CC_UnitDriver::write_lock_to_info_page(uint8_t lock_byte)
 {
 	select_info_page_flash(true);
 
-	ByteVector data;
+	std::vector<uint8_t> data;
 	data.push_back(0xFF);
 	data.push_back(lock_byte);
 
@@ -554,7 +554,7 @@ bool CC_UnitDriver::empty_block(const uint8_t* data, size_t size)
 	if (size <= MAX_EMPTY_BLOCK_SIZE)
 		return memcmp(data, empty_block_, size) == 0;
 
-	ByteVector empty_block;
+	std::vector<uint8_t> empty_block;
 	empty_block.resize(size, FLASH_EMPTY_BYTE);
 	return memcmp(data, &empty_block[0], size) == 0;
 }
@@ -562,10 +562,10 @@ bool CC_UnitDriver::empty_block(const uint8_t* data, size_t size)
 //==============================================================================
 void CC_UnitDriver::convert_lock_data_std_set(
 		const std::vector<std::string> &qualifiers,
-		const ByteVector& lock_sizes,
-		ByteVector& lock_data)
+		const std::vector<uint8_t>& lock_sizes,
+		std::vector<uint8_t>& lock_data)
 {
-	ByteVector data(1, 0x1F);
+	std::vector<uint8_t> data(1, 0x1F);
 
 	for (const auto &item : qualifiers)
 	{
@@ -585,7 +585,7 @@ void CC_UnitDriver::convert_lock_data_std_set(
 			if (!string_to_number(arg, size))
 				throw std::runtime_error("incorrect flash size value");
 
-			ByteVector::const_iterator it = std::find(
+			std::vector<uint8_t>::const_iterator it = std::find(
 					lock_sizes.begin(),
 					lock_sizes.end(),
 					size);
@@ -630,7 +630,7 @@ void CC_UnitDriver::write_flash_slow(const DataSectionStore &section_store)
 
 	size_t faddr = (size_t)-1;
 
-	ByteVector data;
+	std::vector<uint8_t> data;
 	section_store.create_image(FLASH_EMPTY_BYTE, data);
 	data.resize(align_up(section_store.upper_address(), WRITE_BLOCK_SIZE),
 			FLASH_EMPTY_BYTE);

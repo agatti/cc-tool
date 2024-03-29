@@ -183,7 +183,7 @@ bool DataSectionStore::add_sections(const DataSectionStore &store, bool overwrit
 }
 
 //==============================================================================
-void DataSectionStore::create_image(uint8_t filler, ByteVector &image) const
+void DataSectionStore::create_image(uint8_t filler, std::vector<uint8_t> &image) const
 {
 	image.resize(upper_address(), 0);
 	std::fill(image.begin(), image.end(), filler);
