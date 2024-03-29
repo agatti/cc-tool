@@ -24,13 +24,13 @@ public:
 	enum DebugLevel { DL_OFF = 0, DL_ERROR, DL_WARNING, DL_INFORMATION };
 	void set_debug_mode(DebugLevel level);
 
-	void set_transfer_timeout(uint_t timeout);
+	void set_transfer_timeout(unsigned int timeout);
 
 	void reset_device();
 
-	void set_configuration(uint_t configuration); // throw
-	void claim_interface(uint_t interface_number); // throw
-	void release_interface(uint_t interface_number); // throw
+	void set_configuration(unsigned int configuration); // throw
+	void claim_interface(unsigned int interface_number); // throw
+	void release_interface(unsigned int interface_number); // throw
 
 	void device_descriptor(libusb_device_descriptor &descriptor); // throw
 	void string_descriptor_utf8(uint8_t index, uint16_t language, String &data); // throw
@@ -62,7 +62,7 @@ private:
 	USB_ContextPtr context_;
 	libusb_device_handle *handle_;
 	libusb_device *device_;
-	uint_t timeout_;
+	unsigned int timeout_;
 };
 
 #endif // !_USB_DEVICE_H_

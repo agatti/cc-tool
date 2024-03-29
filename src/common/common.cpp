@@ -12,7 +12,7 @@
 #include "common.h"
 
 //==============================================================================
-uint_t align_up(uint_t value, uint_t alignment)
+unsigned int align_up(unsigned int value, unsigned int alignment)
 {
 	return ((value + alignment - 1) / alignment) * alignment;
 }
@@ -58,7 +58,7 @@ String binary_to_hex(const uint8_t data[], size_t size, const char delimiter[])
 }
 
 //==============================================================================
-uint_t get_tick_count()
+unsigned int get_tick_count()
 {
     struct timeval tv;
 

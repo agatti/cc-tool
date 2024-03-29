@@ -26,7 +26,7 @@ struct USB_DeviceID
 	uint8_t	 endpoint_out;
 
 	char	 description[256];
-	uint_t	 protocol;
+    unsigned int protocol;
 };
 
 struct CC_ProgrammerInfo
@@ -54,7 +54,7 @@ public:
 	enum OpenResult { OR_OK, OR_NOT_FOUND, OR_NOT_SUPPORTED };
 
 	OpenResult open();
-	OpenResult open(uint_t bus, uint_t device);
+	OpenResult open(unsigned int bus, unsigned int device);
 	[[nodiscard]] bool opened() const;
 	void close();
 
@@ -66,7 +66,7 @@ public:
 	enum InterfaceSpeed { IS_SLOW, IS_FAST };
 	bool set_debug_interface_speed(InterfaceSpeed speed);
 
-	bool unit_set_flash_size(uint_t flash_size);
+	bool unit_set_flash_size(unsigned int flash_size);
 
 	void unit_status(String &name, bool &supported) const;
 	bool unit_connect(UnitInfo &info);
@@ -91,7 +91,7 @@ public:
 	void unit_convert_lock_data(const StringVector& qualifiers,
 			ByteVector& lock_data);
 
-	[[nodiscard]] uint_t unit_lock_data_size() const;
+	[[nodiscard]] unsigned int unit_lock_data_size() const;
 
 	bool flash_image_embed_mac_address(DataSectionStore &sections,
 			const ByteVector &mac_address);

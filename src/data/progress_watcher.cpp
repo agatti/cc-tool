@@ -19,7 +19,7 @@ void ProgressWatcher::do_on_write_progress(const OnProgress::slot_type &slot)
 {	on_write_progress_.connect(slot); }
 
 //==============================================================================
-void ProgressWatcher::read_progress(uint_t done_chunk)
+void ProgressWatcher::read_progress(unsigned int done_chunk)
 {
 	if (enabled_ && read_started_ && done_chunk)
 	{
@@ -29,7 +29,7 @@ void ProgressWatcher::read_progress(uint_t done_chunk)
 }
 
 //==============================================================================
-void ProgressWatcher::write_progress(uint_t done_chunk)
+void ProgressWatcher::write_progress(unsigned int done_chunk)
 {
 	if (enabled_ && write_started_ && done_chunk)
 	{

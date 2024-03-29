@@ -15,7 +15,7 @@
 #include "cc_base.h"
 
 //==============================================================================
-static bool extract_usb_address(const String &str, uint_t &bus, uint_t &device)
+static bool extract_usb_address(const String &str, unsigned int &bus, unsigned int &device)
 {
 	std::smatch match;
 	std::regex regex("([\\d]{1,3}):([\\d]{1,3})");
@@ -113,8 +113,9 @@ bool CC_Base::read_options(const po::options_description &desc, const po::variab
 
 	if (vm.count("device"))
 	{
-		uint_t bus = 0, device = 0;
-		if (!extract_usb_address(option_device_address_, bus, device))
+        unsigned int bus = 0;
+        unsigned int device = 0;
+        if (!extract_usb_address(option_device_address_, bus, device))
 			throw po::error("Bad device address format");
 	}
 
@@ -165,8 +166,9 @@ bool CC_Base::init_programmer()
 
 	if (!option_device_address_.empty())
 	{
-		uint_t bus = 0, device = 0;
-		extract_usb_address(option_device_address_, bus, device);
+        unsigned int bus = 0;
+        unsigned int device = 0;
+        extract_usb_address(option_device_address_, bus, device);
 		open_result = programmer_.open(bus, device);
 		if (open_result == CC_Programmer::OR_NOT_SUPPORTED)
 			std::cout << std::setfill('0') << "  Device at "

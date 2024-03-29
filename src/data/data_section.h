@@ -18,13 +18,13 @@ struct DataSection
 {
 	[[nodiscard]] bool empty() const;
 	[[nodiscard]] size_t size() const;
-	[[nodiscard]] uint_t next_address() const;
+	[[nodiscard]] unsigned int next_address() const;
 
 	DataSection();
-	DataSection(uint_t address, const ByteVector &data);
-	DataSection(uint_t address, const uint8_t data[], size_t size);
+	DataSection(unsigned int address, const ByteVector &data);
+	DataSection(unsigned int address, const uint8_t data[], size_t size);
 
-	uint_t address;
+    unsigned int address;
 	ByteVector data;
 };
 

@@ -42,14 +42,14 @@ private:
 	void flash_read_block(size_t offset, size_t size, ByteVector &flash_data) override;
 
 //	void flash_read_page(uint16_t address, ByteVector &flash_data);
-	void flash_select_bank(uint_t bank);
+	void flash_select_bank(unsigned int bank);
 //	void flash_read_start();
 //	void flash_read_end();
 
 	/// Return absolute flash offset where secondary mac address is stored
-	[[nodiscard]] uint_t mac_address_offset() const;
+	[[nodiscard]] unsigned int mac_address_offset() const;
 	/// Return absolute flash offset where lock data is stored
-	[[nodiscard]] uint_t lock_data_offset() const;
+	[[nodiscard]] unsigned int lock_data_offset() const;
 };
 
 #endif // !_CC_253X_2540_H_

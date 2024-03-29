@@ -245,7 +245,7 @@ void USB_Device::string_descriptor_ascii(uint8_t index, String &data)
 }
 
 //==============================================================================
-void USB_Device::set_transfer_timeout(uint_t timeout)
+void USB_Device::set_transfer_timeout(unsigned int timeout)
 {
 	log_info("usb, set timeout %u ms", timeout);
 
@@ -265,7 +265,7 @@ void USB_Device::reset_device()
 }
 
 //==============================================================================
-void USB_Device::claim_interface(uint_t interface_number)
+void USB_Device::claim_interface(unsigned int interface_number)
 {
 	log_info("usb, claim interface %u", interface_number);
 
@@ -275,7 +275,7 @@ void USB_Device::claim_interface(uint_t interface_number)
 }
 
 //==============================================================================
-void USB_Device::release_interface(uint_t interface_number)
+void USB_Device::release_interface(unsigned int interface_number)
 {
 	log_info("usb, release interface %u", interface_number);
 
@@ -285,7 +285,7 @@ void USB_Device::release_interface(uint_t interface_number)
 }
 
 //==============================================================================
-void USB_Device::set_configuration(uint_t configuration)
+void USB_Device::set_configuration(unsigned int configuration)
 {
 	log_info("usb, set configuration %u", configuration);
 

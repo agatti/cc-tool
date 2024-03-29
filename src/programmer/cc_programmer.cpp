@@ -15,8 +15,8 @@
 #include "cc_243x.h"
 #include "log.h"
 
-const uint_t DEFAULT_TIMEOUT = 3000;
-const uint_t MAX_ERASE_TIME	= 8000;
+const unsigned int DEFAULT_TIMEOUT = 3000;
+const unsigned int MAX_ERASE_TIME = 8000;
 
 const static USB_DeviceID DeviceTable[] = {
 	{ 0x0451, 0x16A2, 0x84, 0x04, "CC Debugger",
@@ -105,7 +105,7 @@ bool CC_Programmer::set_debug_interface_speed(CC_Programmer::InterfaceSpeed spee
 }
 
 //==============================================================================
-bool CC_Programmer::unit_set_flash_size(uint_t flash_size)
+bool CC_Programmer::unit_set_flash_size(unsigned int flash_size)
 {
 	return driver_->set_flash_size(flash_size);
 }
@@ -133,7 +133,7 @@ void CC_Programmer::init_device()
 }
 
 //==============================================================================
-CC_Programmer::OpenResult CC_Programmer::open(uint_t bus, uint_t device)
+CC_Programmer::OpenResult CC_Programmer::open(unsigned int bus, unsigned int device)
 {
 	if (!usb_device_.open_by_address(bus, device))
 		return OR_NOT_FOUND;
@@ -335,7 +335,7 @@ bool CC_Programmer::unit_erase()
 {
 	driver_->erase();
 
-	uint_t erase_timer = get_tick_count();
+	unsigned int erase_timer = get_tick_count();
 	do
 	{
 		if (driver_->erase_check_completed())
@@ -383,7 +383,7 @@ bool CC_Programmer::flash_image_embed_lock_data(DataSectionStore &sections,
 }
 
 //==============================================================================
-uint_t CC_Programmer::unit_lock_data_size() const
+unsigned int CC_Programmer::unit_lock_data_size() const
 {
 	return driver_->lock_data_size();
 }

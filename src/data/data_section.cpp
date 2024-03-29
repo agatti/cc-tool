@@ -35,7 +35,7 @@ size_t DataSection::size() const
 }
 
 //==============================================================================
-uint_t DataSection::next_address() const
+unsigned int DataSection::next_address() const
 {
 	return address + data.size();
 }
@@ -46,13 +46,13 @@ DataSection::DataSection() :
 { }
 
 //==============================================================================
-DataSection::DataSection(uint_t address_, const ByteVector &data_) :
+DataSection::DataSection(unsigned int address_, const ByteVector &data_) :
 		address(address_),
 		data(data_)
 { }
 
 //==============================================================================
-DataSection::DataSection(uint_t address_, const uint8_t data_[], size_t size) :
+DataSection::DataSection(unsigned int address_, const uint8_t data_[], size_t size) :
 		address(address_),
 		data(data_, data_ + size)
 { }

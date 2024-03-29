@@ -121,8 +121,8 @@ static std::ostream& operator <<(std::ostream &os, const UnitInfo &o)
 {
 	os << "   Name: " << o.name << "\n";
 	os << std::hex << std::setfill('0') << std::uppercase;
-	os << "   Revision: 0x" << std::setw(2) << (uint_t)o.revision << "\n";
-	os << "   Internal ID: 0x" << std::setw(2) << (uint_t)o.internal_ID << "\n";
+	os << "   Revision: 0x" << std::setw(2) << (unsigned int)o.revision << "\n";
+	os << "   Internal ID: 0x" << std::setw(2) << (unsigned int)o.internal_ID << "\n";
 	os << "   ID: 0x" << std::setw(4) << o.ID << "\n";
 	os << std::dec;
 	os << "   Flash size: ";
@@ -415,7 +415,7 @@ bool CC_Flasher::validate_flash_size_options()
 		std::cout << "  Specified flash size is ignored (read from target instead) " << "\n";
 	else
 	{
-		uint_t flash_size = 0;
+		unsigned int flash_size = 0;
 		string_to_number(option_flash_size_, flash_size);
 
 		bool found = std::find(

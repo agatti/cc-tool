@@ -76,7 +76,7 @@ static void add_replace_section(
 		// new section starts in another section
 		if (cur_section->next_address() > section.address)
 		{
-			uint_t section_offset = section.address - cur_section->address;
+			unsigned int section_offset = section.address - cur_section->address;
 
 			// simple case: replace a part of existing section,
 			// no size change, no normalize

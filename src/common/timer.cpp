@@ -27,7 +27,7 @@ void Timer::start()
 //==============================================================================
 String Timer::elapsed_time() const
 {
-	uint_t elapsed_time = get_tick_count() - start_time_;
+	unsigned int elapsed_time = get_tick_count() - start_time_;
 
 	char buf[16];
 	sprintf(buf, "%.02f s.", (float)elapsed_time / 1000);

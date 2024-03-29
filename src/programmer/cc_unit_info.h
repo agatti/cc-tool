@@ -16,11 +16,11 @@
 
 struct Unit_ID
 {
-	uint_t ID;
+    unsigned int ID;
 	String name;
 
 	Unit_ID() : ID(0) { }
-	Unit_ID(uint_t ID_, const String &name_) : ID(ID_), name(name_) { }
+	Unit_ID(unsigned int ID_, const String &name_) : ID(ID_), name(name_) { }
 };
 
 struct UnitInfo
@@ -31,20 +31,20 @@ struct UnitInfo
 		SUPPORT_INFO_PAGE = 0x04
 	};
 
-	uint_t ID; 				// ID used by programmer
+    unsigned int ID;                // ID used by programmer
 	String name;			// like 'CCxxxx'
 	uint8_t internal_ID; 	// read from chip
 	uint8_t revision;		// read from chip
-	uint_t flags;
+    unsigned int flags;
 
-	uint_t flash_size; 		// in KB
-	uint_t max_flash_size; 	// in KB
+    unsigned int flash_size;        // in KB
+    unsigned int max_flash_size;    // in KB
 	UintVector flash_sizes;	// list of possible flash sizes, in KB
 
-	uint_t ram_size; 		// in KB
-	uint_t mac_address_count;
-	uint_t mac_address_size;
-	uint_t flash_page_size; // in KB
+    unsigned int ram_size;        // in KB
+    unsigned int mac_address_count;
+    unsigned int mac_address_size;
+    unsigned int flash_page_size; // in KB
 
 	[[nodiscard]] size_t actual_flash_size() const;
 
@@ -84,7 +84,7 @@ struct UnitCoreInfo
 
 typedef std::list<Unit_ID> Unit_ID_List;
 
-void check_param(bool assert, const String& module, uint_t line);
+void check_param(bool assert, const String& module, unsigned int line);
 #define CHECK_PARAM(x) check_param(x, __FILE__, __LINE__)
 
 #endif // !_CC_UNIT_INFO_H_

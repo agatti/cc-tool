@@ -123,8 +123,8 @@ bool CC_243x::flash_image_embed_mac_address(DataSectionStore &sections,
 	if (!unit_info_.flash_size)
 		return false;
 
-	const uint_t mac_offset = unit_info_.flash_size * 1024 -
-			unit_info_.mac_address_size;
+    const unsigned int mac_offset = unit_info_.flash_size * 1024 -
+                                    unit_info_.mac_address_size;
 
 	DataSection section(mac_offset, mac_address);
 	sections.add_section(section, true);
@@ -159,8 +159,8 @@ bool CC_243x::config_write(const ByteVector &mac_address, const ByteVector &lock
 
 		CHECK_PARAM(mac_address.size() == unit_info_.mac_address_size);
 
-		const uint_t page_size = unit_info_.flash_page_size * 1024;
-		const uint_t page_offset = unit_info_.flash_size * 1024 - page_size;
+        const unsigned int page_size = unit_info_.flash_page_size * 1024;
+        const unsigned int page_offset = unit_info_.flash_size * 1024 - page_size;
 
 		ByteVector block;
 		flash_read_start();
@@ -170,7 +170,7 @@ bool CC_243x::config_write(const ByteVector &mac_address, const ByteVector &lock
 		if (!empty_block(&block[0], block.size()))
 			erase_page(page_offset / page_size);
 
-		const uint_t mac_offset = unit_info_.flash_size * 1024 - mac_address.size();
+        const unsigned int mac_offset = unit_info_.flash_size * 1024 - mac_address.size();
 		memcpy(&block[mac_offset - page_offset], &mac_address[0], mac_address.size());
 
 		DataSectionStore store;

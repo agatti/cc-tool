@@ -37,7 +37,7 @@ public:
 
 private:
 	DataSectionStore &store_;
-	uint_t address_prefix_;
+    unsigned int address_prefix_;
 	bool section_started_;
 	//Error error_;
 	DataSection section_;
@@ -58,14 +58,14 @@ struct Record
 	};
 
 	Type type;
-	uint_t address;
+    unsigned int address;
 	ByteVector data;
 };
 
 static void hex_file_error(
 		const String &file_name,
 		HexDataReader::Error error,
-		uint_t line_number); // throw
+        unsigned int line_number); // throw
 
 //==============================================================================
 std::ostream& operator <<(std::ostream &os, const Record &o)
@@ -116,7 +116,7 @@ static bool hex_to_binary(const char data[], size_t size, uint8_t out[])
 }
 
 //==============================================================================
-static uint_t make_word(uint8_t low_byte, uint8_t high_byte, bool big_endian = true)
+static unsigned int make_word(uint8_t low_byte, uint8_t high_byte, bool big_endian = true)
 {
 	return big_endian ? (low_byte << 8) | high_byte : (high_byte << 8) | low_byte;
 }
@@ -153,7 +153,7 @@ static HexDataReader::Error parse_record(const String &line, Record &record, boo
 	else
 		record.data.clear();
 
-	uint_t address = make_word(data[1], data[2]);
+    unsigned int address = make_word(data[1], data[2]);
 
 	if (record_type == Record::RT_EX_SEGMENT_ADDRESS)
 	{
@@ -243,7 +243,7 @@ void hex_file_load(const String &file_name,
 		throw std::runtime_error("Unable to open file " + file_name);
 
 	HexDataReader::Error error = HexDataReader::ERROR_OK;
-	uint_t line_number = 0;
+    unsigned int line_number = 0;
 
 	HexDataReader reader(section_store, ignore_crc_mismatch);
 	String record_line;
@@ -278,8 +278,8 @@ static void write_eof_record(std::ostream &out)
 }
 
 //==============================================================================
-static void write_data_record(std::ostream &out, uint_t address,
-		const uint8_t data[], size_t size)
+static void write_data_record(std::ostream &out, unsigned int address,
+                              const uint8_t data[], size_t size)
 {
 	const uint8_t buffer[] = { LOBYTE(size), HIBYTE(address), LOBYTE(address), 0x00 };
 
@@ -316,11 +316,11 @@ void hex_file_save(const String &file_name, const DataSectionStore &section_stor
 	if (!out)
 		throw FileException("Unable to open file" + file_name);
 
-	uint_t offset = 0;
+    unsigned int offset = 0;
 	for (const auto &section : section_store.sections())
 	{
-		uint_t address = section.address;
-		uint_t size    = section.size();
+        unsigned int address = section.address;
+        unsigned int size = section.size();
 
 		while (size)
 		{
@@ -330,8 +330,8 @@ void hex_file_save(const String &file_name, const DataSectionStore &section_stor
 				write_segment_record(out, offset >> 4);
 			}
 
-			const uint_t RECORD_MAX_DATA_SIZE = 16;
-			const uint_t record_size = std::min(RECORD_MAX_DATA_SIZE, size);
+            const unsigned int RECORD_MAX_DATA_SIZE = 16;
+            const unsigned int record_size = std::min(RECORD_MAX_DATA_SIZE, size);
 
 			write_data_record(out,
 					address - offset,
@@ -349,7 +349,7 @@ void hex_file_save(const String &file_name, const DataSectionStore &section_stor
 static void hex_file_error(
 		const String &file_name,
 		HexDataReader::Error error,
-		uint_t line_number)
+        unsigned int line_number)
 {
 	std::stringstream ss;
 

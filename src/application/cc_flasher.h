@@ -46,7 +46,7 @@ private:
 	String option_info_page_;
 	String option_verify_type_;
 	String option_flash_size_;
-	uint_t task_set_;
+	unsigned int task_set_;
 
 	CC_Programmer::VerifyMethod verify_method_;
 	DataSectionStore flash_write_data_;

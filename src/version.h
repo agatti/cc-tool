@@ -13,8 +13,8 @@
 
 #include "common.h"
 
-const uint_t VERSION_MAJOR	= 0;
-const uint_t VERSION_MINOR	= 26;
+const unsigned int VERSION_MAJOR = 0;
+const unsigned int VERSION_MINOR = 26;
 
 const char MODULE_NAME[]		= "cc-tool";
 const char MODULE_DESCRIPTION[]	= "Texas Instruments 8051-based System-On-Chip device programmer";

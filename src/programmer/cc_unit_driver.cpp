@@ -41,7 +41,7 @@ void CC_UnitDriver::set_programmer_ID(const USB_DeviceID& programmer_ID)
 }
 
 //==============================================================================
-bool CC_UnitDriver::set_flash_size(uint_t flash_size)
+bool CC_UnitDriver::set_flash_size(unsigned int flash_size)
 {
 	bool found = std::find(
 			unit_info_.flash_sizes.begin(),
@@ -107,7 +107,7 @@ void CC_UnitDriver::write_debug_config(uint8_t config)
 }
 
 //==============================================================================
-bool CC_UnitDriver::erase_page(uint_t page_offset)
+bool CC_UnitDriver::erase_page(unsigned int page_offset)
 {
 	page_offset /= reg_info_.flash_word_size;
 
@@ -535,7 +535,7 @@ void CC_UnitDriver::write_lock_to_info_page(uint8_t lock_byte)
 }
 
 //==============================================================================
-uint_t CC_UnitDriver::lock_data_size() const
+unsigned int CC_UnitDriver::lock_data_size() const
 {
 	return reg_info_.lock_size;
 }
@@ -580,7 +580,7 @@ void CC_UnitDriver::convert_lock_data_std_set(
 		else
 		if (item.find("flash:") == 0)
 		{
-			uint_t size = 0;
+			unsigned int size = 0;
 			String arg = item.substr(ARRAY_SIZE("flash:") - 1);
 			if (!string_to_number(arg, size))
 				throw std::runtime_error("incorrect flash size value");

@@ -37,7 +37,7 @@ const uint16_t XREG_FMAP 		= 0x709F;
 
 //==============================================================================
 static void read_range(const String& input, BoolVector& range,
-		uint_t min_value, uint_t max_value)
+					   unsigned int min_value, unsigned int max_value)
 {
 	std::smatch match;
 	std::regex exp("(\\d{1,})-(\\d{1,})");
@@ -47,8 +47,9 @@ static void read_range(const String& input, BoolVector& range,
 
 	for (const auto& item : list)
 	{
-		uint_t n = 0;
-		uint_t r1, r2;
+		unsigned int n = 0;
+		unsigned int r1;
+		unsigned int r2;
 		if (string_to_number(item, n))
 			r1 = r2 = n;
 		else
@@ -257,7 +258,7 @@ bool CC_253x_254x::erase_check_completed()
 }
 
 //==============================================================================
-void CC_253x_254x::flash_select_bank(uint_t bank)
+void CC_253x_254x::flash_select_bank(unsigned int bank)
 {
 	log_info("programmer, set flash bank %u", bank);
 
@@ -295,8 +296,8 @@ void CC_253x_254x::convert_lock_data(const StringVector& qualifiers,
 			BoolVector pages;
 			read_range(s.substr(ARRAY_SIZE("pages:") - 1), pages,
 					0, MAX_PAGE_COUNT - 1);
-			uint_t count = std::min(pages.size(), MAX_PAGE_COUNT);
-			for (uint_t i = 0; i < count; i++)
+			unsigned int count = std::min(pages.size(), MAX_PAGE_COUNT);
+			for (unsigned int i = 0; i < count; i++)
 				if (pages[i])
 					data[i / 8] &= ~(1 << (i % 8));
 		}
@@ -328,14 +329,14 @@ bool CC_253x_254x::flash_image_embed_lock_data(DataSectionStore &sections,
 }
 
 //==============================================================================
-uint_t CC_253x_254x::mac_address_offset() const
+unsigned int CC_253x_254x::mac_address_offset() const
 {
 	return unit_info_.flash_size * 1024 - LOCK_DATA_SIZE -
 			unit_info_.mac_address_size;
 }
 
 //==============================================================================
-uint_t CC_253x_254x::lock_data_offset() const
+unsigned int CC_253x_254x::lock_data_offset() const
 {
 	return unit_info_.flash_size * 1024 - LOCK_DATA_SIZE;
 }
@@ -347,8 +348,8 @@ bool CC_253x_254x::config_write(const ByteVector &mac_address,
 	if (mac_address.empty() && lock_data.empty())
 		return true;
 
-	const uint_t page_size = unit_info_.flash_page_size * 1024;
-	const uint_t page_offset = unit_info_.flash_size * 1024 - page_size;
+	const unsigned int page_size = unit_info_.flash_page_size * 1024;
+	const unsigned int page_offset = unit_info_.flash_size * 1024 - page_size;
 
 	ByteVector block;
 	flash_read(page_offset, page_size, block);

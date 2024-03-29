@@ -17,13 +17,13 @@
 class ProgressWatcher : boost::noncopyable
 {
 public:
-	typedef boost::signals2::signal<void (uint_t done_size, uint_t full_size)> OnProgress;
+	typedef boost::signals2::signal<void (unsigned int done_size, unsigned int full_size)> OnProgress;
 
 	void do_on_read_progress(const OnProgress::slot_type &slot);
 	void do_on_write_progress(const OnProgress::slot_type &slot);
 
-	void read_progress(uint_t done_chunk_size);
-	void write_progress(uint_t done_chunk_size);
+	void read_progress(unsigned int done_chunk_size);
+	void write_progress(unsigned int done_chunk_size);
 
 	void read_start(size_t total_size);
 	void read_finish();
@@ -36,12 +36,12 @@ public:
 	ProgressWatcher();
 
 private:
-	uint_t total_read_;
-	uint_t total_write_;
+	unsigned int total_read_;
+	unsigned int total_write_;
 	bool read_started_;
 	bool write_started_;
-	uint_t done_read_;
-	uint_t done_write_;
+	unsigned int done_read_;
+	unsigned int done_write_;
 	bool enabled_;
 	OnProgress on_read_progress_;
 	OnProgress on_write_progress_;

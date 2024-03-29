@@ -22,7 +22,7 @@ public:
 private:
 	void start();
 
-	uint_t start_time_;
+	unsigned int start_time_;
 };
 
 #endif // !_TIMER_H_

@@ -69,7 +69,7 @@ public:
 	/// Erase single page. Page size depends on target
 	/// @param page_offset must be aligned to a page boundary.
 	/// @return false if erase was aborted (e.g. 'cause page is locked)
-	virtual bool erase_page(uint_t page_offset);
+	virtual bool erase_page(unsigned int page_offset);
 
 	/// Write data into flash. Empty data block are skipped.
 	/// Modified parts of flash should be bllank.
@@ -110,9 +110,9 @@ public:
 	/// @param debug_mode if true after reset target will be halted
 	void reset(bool debug_mode);
 
-	[[nodiscard]] uint_t lock_data_size() const;
+	[[nodiscard]] unsigned int lock_data_size() const;
 
-	bool set_flash_size(uint_t flash_size);
+	bool set_flash_size(unsigned int flash_size);
 	void set_programmer_ID(const USB_DeviceID& programmer_ID);
 
 	CC_UnitDriver(USB_Device &programmer, ProgressWatcher &pw);
