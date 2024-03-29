@@ -158,6 +158,4 @@ private:
 	UnitCoreInfo reg_info_;
 };
 
-typedef std::list<std::shared_ptr<CC_UnitDriver>> CC_UnitDriverPtrList;
-
 #endif // !_CC_UNIT_DRIVER_H_
