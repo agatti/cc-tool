@@ -16,8 +16,6 @@
 #include <libusb-1.0/libusb.h>
 #include "common.h"
 
-typedef std::shared_ptr<libusb_context> USB_ContextPtr;
-
 class USB_Device : boost::noncopyable
 {
 public:
@@ -59,7 +57,7 @@ private:
 	void init_context();
 	void check_open();
 
-	USB_ContextPtr context_;
+	std::shared_ptr<libusb_context> context_;
 	libusb_device_handle *handle_;
 	libusb_device *device_;
 	unsigned int timeout_;

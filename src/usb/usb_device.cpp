@@ -19,7 +19,7 @@ typedef std::vector<libusb_device *> libusb_device_vector;
 class USB_Enumerator
 {
 public:
-	USB_Enumerator(USB_ContextPtr context, libusb_device_vector &devices);
+	USB_Enumerator(std::shared_ptr<libusb_context> context, libusb_device_vector &devices);
 	~USB_Enumerator();
 
 private:
@@ -27,7 +27,7 @@ private:
 };
 
 //==============================================================================
-USB_Enumerator::USB_Enumerator(USB_ContextPtr context, libusb_device_vector &devices)
+USB_Enumerator::USB_Enumerator(std::shared_ptr<libusb_context> context, libusb_device_vector &devices)
 {
 	ssize_t count = libusb_get_device_list(context.get(), &list_);
 	if (count < 0)
@@ -119,7 +119,7 @@ void USB_Device::init_context()
 	if (result != LIBUSB_SUCCESS)
 		on_error("Failed to init USB context", result);
 
-	context_ = USB_ContextPtr(context, libusb_exit);
+	context_ = std::shared_ptr<libusb_context>(context, libusb_exit);
 }
 
 //==============================================================================
