@@ -41,10 +41,10 @@ public:
 	/// Unite all sections to one continuoys memory block
 	void create_image(uint8_t filler, std::vector<uint8_t> &image) const;
 
-	[[nodiscard]] const DataSectionList &sections() const;
+	[[nodiscard]] const std::list<DataSection> & sections() const;
 
 private:
-	DataSectionList sections_;
+	std::list<DataSection> sections_;
 };
 
 #endif // !_DATA_SECTION_STORE_H_

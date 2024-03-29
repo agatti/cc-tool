@@ -28,8 +28,6 @@ struct DataSection
 	std::vector<uint8_t> data;
 };
 
-typedef std::list<DataSection> DataSectionList;
-
 std::ostream& operator <<(std::ostream &os, const DataSection &o);
 
 #endif // !_DATA_SECTION_H_

@@ -28,7 +28,7 @@ static bool sections_overlapped(
 
 //==============================================================================
 static bool check_section_fit(
-		const DataSectionList &sections,
+		const std::list<DataSection> &sections,
 		const DataSection &section)
 {
 	for (const auto &item : sections)
@@ -41,10 +41,10 @@ static bool check_section_fit(
 
 //==============================================================================
 static void add_insert_section(
-		DataSectionList &sections,
+		std::list<DataSection> &sections,
 		const DataSection &section)
 {
-	DataSectionList::iterator it = sections.begin();
+	std::list<DataSection>::iterator it = sections.begin();
 	for ( ; it != sections.end(); it++)
 	{
 		if (it->address > section.address)
@@ -60,10 +60,10 @@ static void add_insert_section(
 
 //==============================================================================
 static void add_replace_section(
-		DataSectionList &sections,
+		std::list<DataSection> &sections,
 		const DataSection &section)
 {
-	DataSectionList::iterator cur_section = sections.begin();
+	std::list<DataSection>::iterator cur_section = sections.begin();
 	for (; cur_section != sections.end(); cur_section++)
 	{
 		// new section starts at empty space
@@ -104,7 +104,7 @@ static void add_replace_section(
 	}
 
 	/// normalize sections:
-	DataSectionList::iterator it = cur_section;
+	std::list<DataSection>::iterator it = cur_section;
 	it++;
 	for (; it != sections.end(); ++it)
 	{
@@ -130,7 +130,7 @@ static void add_replace_section(
 }
 
 //==============================================================================
-const DataSectionList &DataSectionStore::sections() const
+const std::list<DataSection> & DataSectionStore::sections() const
 {	return sections_; }
 
 //==============================================================================
