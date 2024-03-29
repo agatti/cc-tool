@@ -32,8 +32,6 @@
 #define LOBYTE(w) 					((uint8_t)(w))
 #define HIBYTE(w) 					((uint8_t)(((uint16_t)(w) >> 8) & 0xFF))
 
-typedef std::vector<unsigned int> 	UintVector;
-
 std::string convenient_storage_size(off_t size);
 unsigned int get_tick_count();
 std::string binary_to_hex(const uint8_t data[], size_t size, const char delimiter[] = "");

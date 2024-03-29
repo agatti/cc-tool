@@ -39,7 +39,7 @@ struct UnitInfo
 
     unsigned int flash_size;        // in KB
     unsigned int max_flash_size;    // in KB
-	UintVector flash_sizes;	// list of possible flash sizes, in KB
+	std::vector<unsigned int> flash_sizes;    // list of possible flash sizes, in KB
 
     unsigned int ram_size;        // in KB
     unsigned int mac_address_count;
