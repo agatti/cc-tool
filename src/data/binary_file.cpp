@@ -9,10 +9,9 @@
  */
 
 #include <filesystem>
-#include <cstdio>
+#include <fstream>
 #include <system_error>
 
-#include "binary_file.h"
 #include "file.h"
 
 namespace fs = std::filesystem;
@@ -57,48 +56,36 @@ static const fs::path& resolve_path(const fs::path &path) {
 }
 
 //==============================================================================
-void binary_file_load(const fs::path &file_name, std::vector<uint8_t> &vector)
+void binary_file_load(const fs::path &path, std::vector<uint8_t> &vector)
 {
-	auto resolved_path = resolve_path(file_name);
+	auto resolved_path = resolve_path(path);
 	std::error_code error;
 	auto size = fs::file_size(resolved_path, error);
 	if (error) {
 		throw FileException("Cannot get file size for " + resolved_path.string() + ": " + error.message());
 	}
 
-	FILE *file = fopen(resolved_path.c_str(), "r");
-	if (!file)
-		file_io_error("Unable to open file file", resolved_path);
-
-	vector.resize(size, 0);
-	if (fread(&vector[0], 1, size, file) != size && ferror(file) != 0)
-	{
-		fclose(file);
-		file_io_error("Unable to read file", file_name);
-		return;
+	auto file = std::ifstream(resolved_path, std::ios::binary);
+	if (!file.good()) {
+		file_io_error("Unable to open file", resolved_path);
 	}
-
-	if (fclose(file))
-		file_io_error("Unable to close file", file_name);
+	vector.resize(size, 0U);
+	file.read(reinterpret_cast<char *>(vector.data()), size);
+	if (!file.good()) {
+		file_io_error("Unable to read data from", resolved_path);
+	}
 }
 
 //==============================================================================
-void binary_file_save(const std::filesystem::path &file_name, const std::vector<uint8_t> &vector)
+void binary_file_save(const fs::path &path, const std::vector<uint8_t> &vector)
 {
-	auto resolved_path = resolve_path(file_name);
-
-	FILE *file = fopen(resolved_path.c_str(), "w");
-	if (!file)
-		file_io_error("Unable to open file file", resolved_path);
-
-	if (fwrite(&vector[0], 1, vector.size(), file) != vector.size() &&
-			ferror(file) != 0)
-	{
-		fclose(file);
-		file_io_error("Unable to write file", resolved_path);
-		return;
+	auto resolved_path = resolve_path(path);
+	auto file = std::ofstream(resolved_path, std::ios::binary | std::ios::trunc);
+	if (!file.good()) {
+		file_io_error("Unable to open file", resolved_path);
 	}
-
-	if (fclose(file))
-		file_io_error("Unable to close file", resolved_path);
+	file.write(reinterpret_cast<const char *>(vector.data()), vector.size());
+	if (!file.good()) {
+		file_io_error("Unable to write data to", resolved_path);
+	}
 }
