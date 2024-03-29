@@ -12,13 +12,6 @@
 
 #include "common.h"
 
-class BinaryFile
-{
-public:
-	static ByteVector& load(const String &file_name, ByteVector &vector);
-	static void save(const String &file_name, const ByteVector &vector);
-};
-
 void binary_file_load(const String &file_name, ByteVector &vector);
 void binary_file_save(const String &file_name, const ByteVector &vector);
 
